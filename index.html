@@ -2,368 +2,537 @@
 <html lang="bg">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0a0a0f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Drakon Fejst">
+<link rel="manifest" href="manifest.json">
 <title>Drakon Fejst 🐉</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Nunito:wght@400;600;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:system-ui,-apple-system,sans-serif;background:#0a0a0f;color:#f0e6d3;min-height:100vh;user-select:none;overflow-x:hidden}
 
-  :root {
-    --bg: #0a0a0f;
-    --bg2: #12121a;
-    --bg3: #1a1a2e;
-    --border: #2a2a3e;
-    --text: #f0e6d3;
-    --text2: #a89070;
-    --gold: #f5c542;
-    --gold2: #c89b2a;
-    --fire: #ff6b2b;
-    --fire2: #ff3a00;
-    --purple: #9b59b6;
-    --purple2: #6c3483;
-    --green: #27ae60;
-    --blue: #2980b9;
-  }
+/* SCREENS */
+.screen{display:none;min-height:100vh}
+.screen.active{display:flex}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'Nunito', sans-serif; font-size: 16px; line-height: 1.7; }
+/* ── SETUP ── */
+#s-setup{flex-direction:column;align-items:center;justify-content:flex-start;padding:28px 16px 48px;background:radial-gradient(ellipse at 50% 0%,#2a0a3e 0%,#0a0a0f 65%)}
+.big-dragon{font-size:64px;animation:float 3s ease-in-out infinite;display:block;text-align:center;margin-bottom:12px}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.gtitle{font-size:clamp(32px,9vw,68px);font-weight:900;letter-spacing:3px;background:linear-gradient(135deg,#f5c542,#ff6b2b,#9b59b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;margin-bottom:6px}
+.gsub{font-size:13px;color:#a89070;text-align:center;margin-bottom:28px}
 
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    background: radial-gradient(ellipse at 50% 0%, #2a0a3e 0%, #0a0a0f 70%);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    text-align: center; padding: 40px 24px;
-    position: relative; overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239b59b6' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    opacity: 0.5;
-  }
-  .dragon-emoji { font-size: 80px; margin-bottom: 16px; animation: float 3s ease-in-out infinite; }
-  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
-  .hero h1 {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(42px, 10vw, 90px);
-    font-weight: 900;
-    background: linear-gradient(135deg, var(--gold) 0%, var(--fire) 50%, var(--purple) 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    letter-spacing: 4px; text-shadow: none;
-    margin-bottom: 8px;
-  }
-  .hero-sub {
-    font-family: 'Cinzel', serif;
-    font-size: 16px; letter-spacing: 6px;
-    color: var(--text2); text-transform: uppercase; margin-bottom: 32px;
-  }
-  .hero-desc { font-size: 18px; color: var(--text2); max-width: 500px; margin-bottom: 40px; }
-  .hero-badges { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
-  .badge {
-    background: rgba(155,89,182,0.15); border: 1px solid var(--purple2);
-    border-radius: 20px; padding: 6px 16px; font-size: 13px; color: var(--text);
-  }
+.sbox{width:100%;max-width:440px;margin-bottom:22px}
+.slabel{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#a89070;margin-bottom:10px}
+.cnt-row{display:flex;gap:8px}
+.cnt{flex:1;padding:12px 0;border-radius:10px;border:2px solid #2a2a3e;background:#12121a;color:#f0e6d3;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s}
+.cnt.on{border-color:#f5c542;background:rgba(245,197,66,.12);color:#f5c542}
 
-  /* NAV */
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(10,10,15,0.92); backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-    display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; padding: 12px 24px;
-  }
-  nav a {
-    color: var(--text2); text-decoration: none; font-size: 14px; font-weight: 600;
-    padding: 6px 14px; border-radius: 6px; transition: all 0.2s;
-  }
-  nav a:hover { background: var(--bg3); color: var(--gold); }
+.hero-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.hero-opt{background:#12121a;border:2px solid #2a2a3e;border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;transition:all .2s}
+.hero-opt:hover{border-color:#6c3483}
+.hero-opt.on{border-color:var(--hc);background:rgba(0,0,0,.35)}
+.ho-em{font-size:28px;display:block}
+.ho-nm{font-size:11px;color:#a89070;margin-top:3px}
+.ho-pw{font-size:9px;color:#604a80;margin-top:2px;line-height:1.3}
+.p-label{font-size:12px;margin-bottom:8px}
+.p-row{margin-bottom:16px;width:100%;max-width:440px}
 
-  /* SECTIONS */
-  section { max-width: 980px; margin: 0 auto; padding: 80px 24px; }
-  .section-title {
-    font-family: 'Cinzel', serif; font-size: 32px; font-weight: 700;
-    color: var(--gold); margin-bottom: 40px; text-align: center;
-    display: flex; align-items: center; justify-content: center; gap: 12px;
-  }
-  .section-title::before, .section-title::after {
-    content: ''; flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--border));
-  }
-  .section-title::after { background: linear-gradient(to left, transparent, var(--border)); }
+.btn-start{width:100%;max-width:440px;padding:15px;border-radius:13px;background:linear-gradient(135deg,#6c3483,#ff6b2b);color:#fff;font-size:17px;font-weight:700;border:none;cursor:pointer;margin-top:10px;letter-spacing:.5px}
+.btn-start:hover{opacity:.9}
 
-  /* RULES */
-  .rules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-  .rule-card {
-    background: var(--bg2); border: 1px solid var(--border); border-radius: 16px;
-    padding: 24px; transition: border-color 0.2s, transform 0.2s;
-  }
-  .rule-card:hover { border-color: var(--gold2); transform: translateY(-4px); }
-  .rule-num {
-    font-family: 'Cinzel', serif; font-size: 36px; font-weight: 900;
-    color: var(--gold2); opacity: 0.4; margin-bottom: 8px;
-  }
-  .rule-title { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
-  .rule-desc { font-size: 14px; color: var(--text2); }
+/* ── GAME ── */
+#s-game{flex-direction:column;background:#0a0a0f}
+.game-wrap{display:grid;grid-template-columns:1fr 250px;height:100vh;max-height:100vh}
+@media(max-width:680px){.game-wrap{grid-template-columns:1fr;grid-template-rows:auto 1fr;height:auto}}
 
-  /* BOARD CELLS */
-  .cells-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
-  .cell-card {
-    background: var(--bg2); border-radius: 14px; padding: 20px;
-    border: 1px solid var(--border); text-align: center; transition: transform 0.2s;
-  }
-  .cell-card:hover { transform: scale(1.04); }
-  .cell-icon { font-size: 40px; margin-bottom: 12px; }
-  .cell-name { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
-  .cell-desc { font-size: 13px; color: var(--text2); }
-  .cell-good .cell-name { color: var(--green); }
-  .cell-good { border-color: rgba(39,174,96,0.3); }
-  .cell-bad .cell-name { color: var(--fire); }
-  .cell-bad { border-color: rgba(255,107,43,0.3); }
-  .cell-special .cell-name { color: var(--gold); }
-  .cell-special { border-color: rgba(245,197,66,0.3); }
-  .cell-neutral .cell-name { color: var(--blue); }
-  .cell-neutral { border-color: rgba(41,128,185,0.3); }
-  .cell-sleep .cell-name { color: var(--purple); }
-  .cell-sleep { border-color: rgba(155,89,182,0.3); }
+.board-area{display:flex;align-items:center;justify-content:center;padding:12px;overflow:hidden}
+.board{display:grid;grid-template-columns:repeat(10,1fr);grid-template-rows:repeat(6,1fr);gap:3px;width:100%;max-width:520px;aspect-ratio:10/6}
 
-  /* HEROES */
-  .heroes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
-  .hero-card {
-    background: var(--bg2); border: 1px solid var(--border); border-radius: 18px;
-    padding: 28px 24px; text-align: center; transition: all 0.2s; position: relative; overflow: hidden;
-  }
-  .hero-card::before {
-    content: ''; position: absolute; inset: 0;
-    background: var(--hero-color); opacity: 0.04; transition: opacity 0.2s;
-  }
-  .hero-card:hover::before { opacity: 0.1; }
-  .hero-card:hover { transform: translateY(-6px); border-color: var(--hero-color); }
-  .hero-avatar { font-size: 56px; margin-bottom: 14px; }
-  .hero-name {
-    font-family: 'Cinzel', serif; font-size: 18px; font-weight: 700;
-    color: var(--hero-color); margin-bottom: 4px;
-  }
-  .hero-title { font-size: 12px; color: var(--text2); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 14px; }
-  .hero-power {
-    background: rgba(0,0,0,0.3); border-radius: 10px; padding: 12px 14px;
-    font-size: 13px; color: var(--text2); border-left: 3px solid var(--hero-color);
-    text-align: left;
-  }
-  .hero-power strong { color: var(--text); display: block; margin-bottom: 4px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+.cell{border-radius:5px;background:#111118;border:1px solid #1e1e2e;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;position:relative;padding:2px 1px;cursor:default;transition:background .2s}
+.cell-n{position:absolute;top:1px;left:2px;font-size:clamp(6px,1vw,9px);color:#2a2a4a;line-height:1}
+.cell-ic{font-size:clamp(10px,1.8vw,16px);margin-top:auto;line-height:1}
+.cell-tok{display:flex;flex-wrap:wrap;gap:1px;justify-content:center;margin-top:auto;padding-bottom:1px}
+.tok{border-radius:50%;border:1px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-size:clamp(7px,1.2vw,11px);width:clamp(11px,2vw,16px);height:clamp(11px,2vw,16px);background:var(--tc);transition:all .35s}
+.cell.sp{border-color:var(--sc)}
+.cell.fin{background:linear-gradient(135deg,rgba(245,197,66,.18),rgba(255,107,43,.15));border-color:#f5c542}
 
-  /* HOW TO PLAY */
-  .steps { display: flex; flex-direction: column; gap: 0; position: relative; }
-  .steps::before {
-    content: ''; position: absolute; left: 28px; top: 28px; bottom: 28px; width: 2px;
-    background: linear-gradient(to bottom, var(--gold), var(--purple));
-  }
-  .step { display: flex; gap: 20px; padding: 20px 0; }
-  .step-num {
-    width: 56px; height: 56px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold2), var(--fire));
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Cinzel', serif; font-weight: 900; font-size: 20px; color: #000;
-    flex-shrink: 0; position: relative; z-index: 1;
-  }
-  .step-content { padding-top: 10px; }
-  .step-content h3 { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
-  .step-content p { font-size: 14px; color: var(--text2); }
+/* SIDEBAR */
+.sidebar{background:#0e0e18;border-left:1px solid #1e1e2e;display:flex;flex-direction:column;gap:12px;padding:12px;overflow-y:auto}
+@media(max-width:680px){.sidebar{border-left:none;border-top:1px solid #1e1e2e;height:auto}}
 
-  /* DIVIDER */
-  .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+.cur-box{background:#1a1a2e;border-radius:11px;padding:12px;border:2px solid var(--cc,#6c3483);text-align:center}
+.cur-em{font-size:36px}
+.cur-name{font-size:14px;font-weight:700;color:var(--cc,#f5c542);margin-top:3px}
+.cur-info{font-size:11px;color:#a89070}
 
-  /* FOOTER */
-  footer {
-    text-align: center; padding: 40px 24px; color: var(--text2); font-size: 13px;
-    border-top: 1px solid var(--border);
-    background: var(--bg2);
-  }
-  footer span { color: var(--gold); }
+.dice-box{text-align:center}
+.dice{width:64px;height:64px;background:#fff;border-radius:13px;display:inline-flex;align-items:center;justify-content:center;font-size:32px;cursor:pointer;margin:6px auto;box-shadow:0 4px 18px rgba(0,0,0,.5);transition:transform .1s;display:inline-block;line-height:64px;text-align:center}
+.dice:active{transform:scale(.9)}
+.dice.spin{animation:dspin .55s ease}
+@keyframes dspin{0%{transform:rotate(0) scale(1)}25%{transform:rotate(22deg) scale(1.12)}60%{transform:rotate(-14deg) scale(.93)}100%{transform:rotate(0) scale(1)}}
+.btn-roll{width:100%;padding:10px;border-radius:9px;background:linear-gradient(135deg,#6c3483,#9b59b6);color:#fff;font-size:14px;font-weight:700;border:none;cursor:pointer;transition:opacity .2s}
+.btn-roll:disabled{opacity:.4;cursor:not-allowed}
+
+.pwr-btn{width:100%;padding:9px;border-radius:9px;background:linear-gradient(135deg,#b8860b,#f5c542);color:#000;font-size:12px;font-weight:700;border:none;cursor:pointer;transition:opacity .2s}
+.pwr-btn:disabled{opacity:.35;cursor:not-allowed}
+.pwr-info{font-size:10px;color:#a89070;text-align:center;margin-top:4px;line-height:1.4}
+
+.plist{display:flex;flex-direction:column;gap:6px}
+.pitem{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:8px;background:#1a1a2e;border:1px solid transparent}
+.pitem.cur{border-color:var(--pc)}
+.pdot{width:26px;height:26px;border-radius:50%;background:var(--pc);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.pinfo .pname{font-size:12px;font-weight:600}
+.pinfo .ppos{font-size:10px;color:#a89070}
+
+.log-box{background:#09090f;border-radius:8px;padding:8px;max-height:100px;overflow-y:auto;font-size:11px;color:#a89070;line-height:1.6}
+
+/* TOAST */
+.toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.85);background:rgba(20,18,40,.97);border:2px solid #6c3483;border-radius:14px;padding:18px 24px;text-align:center;z-index:500;opacity:0;transition:all .25s;pointer-events:none;max-width:280px}
+.toast.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.t-ic{font-size:38px;display:block;margin-bottom:6px}
+.t-msg{font-size:15px;font-weight:700}
+.t-sub{font-size:12px;color:#a89070;margin-top:3px}
+
+/* TARGET OVERLAY */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:300;display:none;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+.overlay.on{display:flex}
+.ov-title{font-size:18px;font-weight:700;color:#f5c542}
+.tgt{display:flex;align-items:center;gap:12px;padding:12px 22px;border-radius:11px;background:#12121a;border:2px solid #2a2a3e;cursor:pointer;width:220px;transition:border-color .2s}
+.tgt:hover{border-color:#e74c3c}
+.ov-cancel{padding:8px 22px;border-radius:8px;background:#1a1a2e;border:1px solid #2a2a3e;color:#a89070;cursor:pointer;font-size:13px}
+
+/* WIN */
+#s-win{flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;text-align:center;background:radial-gradient(ellipse at 50% 30%,#2a0a3e 0%,#0a0a0f 70%)}
+.win-em{font-size:80px;animation:float 2s ease-in-out infinite}
+.win-title{font-size:44px;font-weight:900;color:#f5c542;margin:14px 0 6px}
+.win-sub{font-size:17px;color:#a89070;margin-bottom:30px}
+.btn-again{padding:13px 36px;border-radius:11px;background:linear-gradient(135deg,#6c3483,#ff6b2b);color:#fff;font-size:16px;font-weight:700;border:none;cursor:pointer}
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.conf{position:absolute;border-radius:2px;animation:cfall linear forwards}
+@keyframes cfall{0%{transform:translateY(-10px) rotate(0);opacity:1}100%{transform:translateY(110vh) rotate(540deg);opacity:0}}
 </style>
 </head>
 <body>
 
-<div class="hero">
-  <div class="dragon-emoji">🐉</div>
-  <h1>DRAKON FEJST</h1>
-  <div class="hero-sub">Семейна игра с дракони</div>
-  <p class="hero-desc">Приключение за 2–6 играчи, пълно с дракони, съкровища и изненади. Кой ще стигне пръв до края?</p>
-  <div class="hero-badges">
-    <span class="badge">👨‍👩‍👧‍👦 2–6 играчи</span>
-    <span class="badge">⏱ 30–45 мин.</span>
-    <span class="badge">🎂 5+ години</span>
-    <span class="badge">🎲 Зар + Карти</span>
+<!-- SETUP -->
+<div id="s-setup" class="screen active">
+  <span class="big-dragon">🐉</span>
+  <div class="gtitle">DRAKON FEJST</div>
+  <div class="gsub">Семейна игра с дракони • 2–6 играча</div>
+
+  <div class="sbox">
+    <div class="slabel">Брой играчи</div>
+    <div class="cnt-row" id="cnt-row">
+      <button class="cnt" onclick="setN(2)">2</button>
+      <button class="cnt" onclick="setN(3)">3</button>
+      <button class="cnt" onclick="setN(4)">4</button>
+      <button class="cnt" onclick="setN(5)">5</button>
+      <button class="cnt" onclick="setN(6)">6</button>
+    </div>
+  </div>
+
+  <div id="hero-area"></div>
+  <button class="btn-start" id="btn-go" onclick="startGame()" style="display:none">🐉 Започни играта!</button>
+</div>
+
+<!-- GAME -->
+<div id="s-game" class="screen">
+  <div class="game-wrap">
+    <div class="board-area"><div class="board" id="board"></div></div>
+    <div class="sidebar">
+      <div class="cur-box" id="cur-box"></div>
+      <div class="dice-box">
+        <div class="dice" id="dice" onclick="rollDice()">🎲</div>
+        <button class="btn-roll" id="btn-roll" onclick="rollDice()">Хвърли зара!</button>
+      </div>
+      <div>
+        <button class="pwr-btn" id="pwr-btn" onclick="usePower()">⚡ Специална сила</button>
+        <div class="pwr-info" id="pwr-info"></div>
+      </div>
+      <div class="plist" id="plist"></div>
+      <div>
+        <div style="font-size:10px;color:#a89070;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px">Събития</div>
+        <div class="log-box" id="log-box"></div>
+      </div>
+    </div>
   </div>
 </div>
 
-<nav>
-  <a href="#rules">📜 Правила</a>
-  <a href="#board">🗺 Полето</a>
-  <a href="#heroes">🦸 Герои</a>
-  <a href="#howtoplay">🎲 Как се играе</a>
-</nav>
+<!-- WIN -->
+<div id="s-win" class="screen">
+  <div class="confetti-wrap" id="cw"></div>
+  <span class="win-em" id="w-em">🐉</span>
+  <div class="win-title" id="w-title">Победа!</div>
+  <div class="win-sub" id="w-sub"></div>
+  <button class="btn-again" onclick="resetGame()">🔄 Играй отново</button>
+</div>
 
-<section id="rules">
-  <div class="section-title">📜 Основни правила</div>
-  <div class="rules-grid">
-    <div class="rule-card">
-      <div class="rule-num">01</div>
-      <div class="rule-title">Цел на играта</div>
-      <div class="rule-desc">Бъди първият играч, който стигне до финалната клетка на полето — Гнездото на Дракона!</div>
-    </div>
-    <div class="rule-card">
-      <div class="rule-num">02</div>
-      <div class="rule-title">Ход</div>
-      <div class="rule-desc">На твой ред хвърли зара и се премести напред с толкова клетки. После провери дали си кацнал на специална клетка.</div>
-    </div>
-    <div class="rule-card">
-      <div class="rule-num">03</div>
-      <div class="rule-title">Специална сила</div>
-      <div class="rule-desc">Всеки герой има една специална сила, която можеш да използваш само ВЕДНЪЖ в играта. Избери момента мъдро!</div>
-    </div>
-    <div class="rule-card">
-      <div class="rule-num">04</div>
-      <div class="rule-title">Победа</div>
-      <div class="rule-desc">Ако хвърлиш точното число, за да кацнеш на финала — печелиш! Ако се прехвърлиш, чакаш следващия ход.</div>
-    </div>
-  </div>
-</section>
+<!-- LION TARGET -->
+<div class="overlay" id="ov">
+  <div class="ov-title">🦁 Избери жертва (-3 клетки)</div>
+  <div id="ov-list"></div>
+  <button class="ov-cancel" onclick="cancelTarget()">Откажи</button>
+</div>
 
-<hr class="divider">
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span class="t-ic" id="t-ic"></span>
+  <div class="t-msg" id="t-msg"></div>
+  <div class="t-sub" id="t-sub"></div>
+</div>
 
-<section id="board">
-  <div class="section-title">🗺 Специални клетки</div>
-  <div class="cells-grid">
-    <div class="cell-card cell-good">
-      <div class="cell-icon">🐉</div>
-      <div class="cell-name">Добър дракон</div>
-      <div class="cell-desc">Добрият дракон те носи на гръб — скачаш напред с 5 клетки!</div>
-    </div>
-    <div class="cell-card cell-bad">
-      <div class="cell-icon">🔥</div>
-      <div class="cell-name">Лош дракон</div>
-      <div class="cell-desc">Огънят те изгаря — връщаш се назад с 4 клетки. Внимавай!</div>
-    </div>
-    <div class="cell-card cell-special">
-      <div class="cell-icon">💎</div>
-      <div class="cell-name">Съкровище</div>
-      <div class="cell-desc">Намираш съкровище! Скачаш директно до следващата съкровищна клетка.</div>
-    </div>
-    <div class="cell-card cell-neutral">
-      <div class="cell-icon">🔄</div>
-      <div class="cell-name">Размяна</div>
-      <div class="cell-desc">Избираш друг играч и разменяте местата си на полето. Тактика!</div>
-    </div>
-    <div class="cell-card cell-sleep">
-      <div class="cell-icon">💤</div>
-      <div class="cell-name">Сън на дракона</div>
-      <div class="cell-desc">Дракон те приспива — пропускаш следващия си ход.</div>
-    </div>
-    <div class="cell-card cell-special">
-      <div class="cell-icon">⭐</div>
-      <div class="cell-name">Звезден портал</div>
-      <div class="cell-desc">Мистичен портал те телепортира на произволна клетка напред!</div>
-    </div>
-  </div>
-</section>
+<script>
+const COLORS=['#f5c542','#ff6b2b','#9b59b6','#27ae60','#2980b9','#e74c3c'];
+const DICE_ICO=['⚀','⚁','⚂','⚃','⚄','⚅'];
+const HEROES=[
+  {id:'dragon', em:'🐉',name:'Дракон',  power:'Всички се връщат 2 клетки назад'},
+  {id:'phoenix',em:'🦅',name:'Феникс',  power:'Следващото движение назад е отменено'},
+  {id:'unicorn',em:'🦄',name:'Единорог',power:'Хвърли 2 пъти, вземи по-голямото'},
+  {id:'lion',   em:'🦁',name:'Лъв',     power:'Изпрати играч 3 клетки назад'},
+  {id:'wolf',   em:'🐺',name:'Вълк',    power:'Размени се с водача'},
+  {id:'fox',    em:'🦊',name:'Лисица',  power:'Игнорирай следващата лоша клетка'},
+];
+const SP={
+  8: {t:'good',ic:'🐉',col:'#27ae60',d:5},
+  23:{t:'good',ic:'🐉',col:'#27ae60',d:5},
+  37:{t:'good',ic:'🐉',col:'#27ae60',d:5},
+  51:{t:'good',ic:'🐉',col:'#27ae60',d:5},
+  15:{t:'bad', ic:'🔥',col:'#e74c3c',d:-4},
+  30:{t:'bad', ic:'🔥',col:'#e74c3c',d:-4},
+  43:{t:'bad', ic:'🔥',col:'#e74c3c',d:-4},
+  56:{t:'bad', ic:'🔥',col:'#e74c3c',d:-5},
+  11:{t:'gem', ic:'💎',col:'#f5c542'},
+  26:{t:'gem', ic:'💎',col:'#f5c542'},
+  41:{t:'gem', ic:'💎',col:'#f5c542'},
+  19:{t:'swap',ic:'🔄',col:'#2980b9'},
+  36:{t:'swap',ic:'🔄',col:'#2980b9'},
+  13:{t:'sleep',ic:'💤',col:'#9b59b6'},
+  33:{t:'sleep',ic:'💤',col:'#9b59b6'},
+  49:{t:'sleep',ic:'💤',col:'#9b59b6'},
+  21:{t:'star',ic:'⭐',col:'#ff6b2b',d:8},
+  46:{t:'star',ic:'⭐',col:'#ff6b2b',d:8},
+};
 
-<hr class="divider">
+let G={players:[],cur:0,busy:false,log:[],heroes:[]};
+let pCount=0;
 
-<section id="heroes">
-  <div class="section-title">🦸 Герои</div>
-  <div class="heroes-grid">
+// ──── SETUP ────
+function setN(n){
+  pCount=n;
+  document.querySelectorAll('.cnt').forEach((b,i)=>b.classList.toggle('on',i===n-2));
+  G.heroes=new Array(n).fill(0);
+  renderHeroSelect(n);
+  document.getElementById('btn-go').style.display='block';
+}
 
-    <div class="hero-card" style="--hero-color:#f5c542">
-      <div class="hero-avatar">🐉</div>
-      <div class="hero-name">Дракон</div>
-      <div class="hero-title">Пазителят на огъня</div>
-      <div class="hero-power"><strong>⚡ Специална сила</strong>Изгаряш всички — всеки играч се връща с 2 клетки назад.</div>
-    </div>
+function renderHeroSelect(n){
+  const a=document.getElementById('hero-area'); a.innerHTML='';
+  for(let p=0;p<n;p++){
+    const row=document.createElement('div'); row.className='p-row';
+    row.innerHTML=`<div class="p-label" style="color:${COLORS[p]};font-size:12px;font-weight:700">Играч ${p+1} — избери герой</div><div class="hero-grid">${HEROES.map((h,i)=>`<div class="hero-opt ${i===0?'on':''}" style="--hc:${COLORS[p]}" onclick="pickHero(${p},${i})" id="ho-${p}-${i}"><span class="ho-em">${h.em}</span><div class="ho-nm">${h.name}</div><div class="ho-pw">${h.power}</div></div>`).join('')}</div>`;
+    a.appendChild(row);
+  }
+}
 
-    <div class="hero-card" style="--hero-color:#ff6b2b">
-      <div class="hero-avatar">🦅</div>
-      <div class="hero-name">Феникс</div>
-      <div class="hero-title">Птицата на огъня</div>
-      <div class="hero-power"><strong>⚡ Специална сила</strong>Прераждаш се — ако се върнеш назад, вместо това оставаш на място.</div>
-    </div>
+function pickHero(p,i){
+  G.heroes[p]=i;
+  document.querySelectorAll(`#ho-${p}-0,#ho-${p}-1,#ho-${p}-2,#ho-${p}-3,#ho-${p}-4,#ho-${p}-5`)
+    .forEach((el,idx)=>el.classList.toggle('on',idx===i));
+}
 
-    <div class="hero-card" style="--hero-color:#9b59b6">
-      <div class="hero-avatar">🦄</div>
-      <div class="hero-name">Еднорог</div>
-      <div class="hero-title">Мистичният скитник</div>
-      <div class="hero-power"><strong>⚡ Специална сила</strong>Магия — хвърляш зара два пъти и избираш по-голямото число.</div>
-    </div>
+function startGame(){
+  G.players=Array.from({length:pCount},(_,i)=>({
+    name:`Играч ${i+1}`,hero:HEROES[G.heroes[i]],
+    color:COLORS[i],pos:0,pUsed:false,skip:false,shield:false,pShield:false
+  }));
+  G.cur=0; G.busy=false; G.log=[];
+  show('s-game');
+  buildBoard();
+  renderSidebar();
+  log('🐉 Играта започна!');
+}
 
-    <div class="hero-card" style="--hero-color:#27ae60">
-      <div class="hero-avatar">🦁</div>
-      <div class="hero-name">Лъв</div>
-      <div class="hero-title">Царят на смелостта</div>
-      <div class="hero-power"><strong>⚡ Специална сила</strong>Рев — избираш произволен играч и го изпращаш 3 клетки назад.</div>
-    </div>
+// ──── BOARD ────
+function cellNum(r,c){
+  const rfb=5-r,base=rfb*10;
+  return rfb%2===0?base+c+1:base+10-c;
+}
 
-    <div class="hero-card" style="--hero-color:#2980b9">
-      <div class="hero-avatar">🐺</div>
-      <div class="hero-name">Вълк</div>
-      <div class="hero-title">Пазачът на нощта</div>
-      <div class="hero-power"><strong>⚡ Специална сила</strong>Завой — разменяш местото си с играча, който е НАЙ-напред.</div>
-    </div>
+function buildBoard(){
+  const bd=document.getElementById('board'); bd.innerHTML='';
+  for(let r=0;r<6;r++) for(let c=0;c<10;c++){
+    const n=cellNum(r,c),sp=SP[n],fin=n===60;
+    const el=document.createElement('div');
+    el.className='cell'+(sp?' sp':'')+(fin?' fin':'');
+    if(sp) el.style.setProperty('--sc',sp.col);
+    el.id='c'+n;
+    el.innerHTML=`<span class="cell-n">${n}</span><span class="cell-ic">${fin?'🏰':sp?sp.ic:''}</span><div class="cell-tok" id="t${n}"></div>`;
+    bd.appendChild(el);
+  }
+  renderTokens();
+}
 
-    <div class="hero-card" style="--hero-color:#e74c3c">
-      <div class="hero-avatar">🦊</div>
-      <div class="hero-name">Лисица</div>
-      <div class="hero-title">Хитрецът</div>
-      <div class="hero-power"><strong>⚡ Специална сила</strong>Хитрост — пропускаш ефекта на следващата специална клетка.</div>
-    </div>
+function renderTokens(){
+  document.querySelectorAll('.cell-tok').forEach(e=>e.innerHTML='');
+  G.players.forEach((p,i)=>{
+    if(p.pos<1) return;
+    const c=document.getElementById('t'+p.pos);
+    if(!c) return;
+    const t=document.createElement('div');
+    t.className='tok'; t.style.setProperty('--tc',p.color);
+    t.textContent=p.hero.em; c.appendChild(t);
+  });
+}
 
-  </div>
-</section>
+// ──── SIDEBAR ────
+function renderSidebar(){
+  const p=G.players[G.cur];
+  const cb=document.getElementById('cur-box');
+  cb.style.setProperty('--cc',p.color);
+  cb.innerHTML=`<div class="cur-em">${p.hero.em}</div><div class="cur-name">${p.name} · ${p.hero.name}</div><div class="cur-info">${p.skip?'💤 Пропуска хода!':'Твой ред е!'}</div>`;
+  const rb=document.getElementById('btn-roll');
+  rb.disabled=G.busy;
+  rb.textContent=p.skip?'💤 Пропускаш хода':'🎲 Хвърли зара!';
+  const pb=document.getElementById('pwr-btn');
+  pb.disabled=p.pUsed||G.busy;
+  pb.textContent=`${p.hero.em} ${p.hero.name}: Специална сила`;
+  document.getElementById('pwr-info').textContent=p.pUsed?'Вече използвана':p.hero.power;
+  const pl=document.getElementById('plist');
+  pl.innerHTML=G.players.map((q,i)=>`<div class="pitem ${i===G.cur?'cur':''}" style="--pc:${q.color}"><div class="pdot">${q.hero.em}</div><div class="pinfo"><div class="pname">${q.name}</div><div class="ppos">Клетка ${q.pos||'Старт'}${q.skip?' 💤':''}</div></div></div>`).join('');
+}
 
-<hr class="divider">
+// ──── DICE ────
+async function rollDice(){
+  if(G.busy) return;
+  const p=G.players[G.cur];
+  if(p.skip){ p.skip=false; log(`💤 ${p.name} пропуска хода.`); nextTurn(); return; }
+  G.busy=true; renderSidebar();
+  const n=await animDice();
+  log(`🎲 ${p.name} хвърли ${n}`);
+  await move(G.cur,n);
+  G.busy=false;
+}
 
-<section id="howtoplay">
-  <div class="section-title">🎲 Как се играе</div>
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-content">
-        <h3>Изберете герои</h3>
-        <p>Всеки играч избира своя герой и поставя фигурката му на старта. Най-младият играч започва първи.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-content">
-        <h3>Хвърлете зара</h3>
-        <p>На своя ход хвърлете зара и преместете фигурката напред с толкова клетки, колкото показва зарът.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-content">
-        <h3>Активирайте клетката</h3>
-        <p>Ако кацнете на специална клетка — следвайте нейния ефект. Добри дракони ви носят напред, лоши ви връщат назад!</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">4</div>
-      <div class="step-content">
-        <h3>Специална сила</h3>
-        <p>Преди или след хвърлянето на зара можете да използвате специалната сила на героя си — но само веднъж за цялата игра!</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">5</div>
-      <div class="step-content">
-        <h3>Победа!</h3>
-        <p>Първият, който стигне до финалната клетка (Гнездото на Дракона) с точно хвърляне, печели играта!</p>
-      </div>
-    </div>
-  </div>
-</section>
+async function animDice(){
+  const d=document.getElementById('dice');
+  d.classList.add('spin');
+  let v=0;
+  for(let i=0;i<9;i++){ v=rnd6(); d.textContent=DICE_ICO[v-1]; await sl(70); }
+  d.classList.remove('spin');
+  setTimeout(()=>d.classList.add('spin'),0);
+  setTimeout(()=>d.classList.remove('spin'),550);
+  d.textContent=DICE_ICO[v-1];
+  await sl(600);
+  return v;
+}
 
-<footer>
-  <div style="font-size:36px;margin-bottom:12px;">🐉</div>
-  <div style="font-family:'Cinzel',serif;font-size:18px;color:var(--gold);margin-bottom:8px;">DRAKON FEJST</div>
-  <div>Семейна игра с дракони &mdash; Направена с <span>❤</span> и огън</div>
-</footer>
+async function animDice2(){
+  const d=document.getElementById('dice');
+  let v=0;
+  for(let i=0;i<9;i++){ v=rnd6(); d.textContent=DICE_ICO[v-1]; await sl(70); }
+  await sl(300);
+  return v;
+}
 
+function rnd6(){ return Math.ceil(Math.random()*6); }
+
+// ──── MOVE ────
+async function move(pi,steps){
+  const p=G.players[pi];
+  const back=steps<0;
+  // Phoenix shield: block backward movement
+  if(back && p.pShield){
+    p.pShield=false;
+    toast('🦅','Феникс те защити!','Не се връщаш назад!'); await sl(1700);
+    log(`🦅 ${p.name}: Феникс блокира движението назад!`);
+    nextTurn(); return;
+  }
+  const abs=Math.abs(steps);
+  for(let i=0;i<abs;i++){
+    if(back){ if(p.pos>1) p.pos--; }
+    else { if(p.pos<60) p.pos++; }
+    renderTokens(); await sl(90);
+  }
+  if(p.pos>=60){ p.pos=60; renderTokens(); await sl(300); showWin(pi); return; }
+  await applyCell(pi);
+}
+
+async function applyCell(pi){
+  const p=G.players[pi],sp=SP[p.pos];
+  if(!sp){ nextTurn(); return; }
+  // Fox/shield
+  if(p.shield && (sp.t==='bad'||sp.t==='sleep')){
+    p.shield=false;
+    toast('🦊','Лисица те защити!','Лошата клетка е пропусната!'); await sl(1700);
+    log(`🦊 ${p.name} избегна ${sp.ic}`);
+    nextTurn(); return;
+  }
+  if(sp.t==='good'){
+    toast('🐉','Добър дракон!',`+${sp.d} клетки напред!`); await sl(1700);
+    log(`🐉 ${p.name}: добър дракон! +${sp.d}`); await move(pi,sp.d); return;
+  }
+  if(sp.t==='bad'){
+    toast('🔥','Лош дракон!',`${sp.d} клетки назад!`); await sl(1700);
+    log(`🔥 ${p.name}: лош дракон! ${sp.d}`); await move(pi,sp.d); return;
+  }
+  if(sp.t==='gem'){
+    const gems=[11,26,41],nx=gems.filter(g=>g>p.pos)[0]||60;
+    toast('💎','Съкровище!',`Скачаш до клетка ${nx}!`); await sl(1700);
+    log(`💎 ${p.name}: съкровище → ${nx}`); await move(pi,nx-p.pos); return;
+  }
+  if(sp.t==='swap'){
+    const li=leader(pi);
+    if(li!==-1){
+      const lp=G.players[li],tmp=p.pos; p.pos=lp.pos; lp.pos=tmp;
+      toast('🔄','Размяна!',`${p.name} ↔ ${lp.name}`); renderTokens(); await sl(1700);
+      log(`🔄 ${p.name} ↔ ${lp.name}`);
+    }
+    nextTurn(); return;
+  }
+  if(sp.t==='sleep'){
+    p.skip=true; toast('💤','Сън!','Пропускаш следващия ход!'); await sl(1700);
+    log(`💤 ${p.name} заспа!`); nextTurn(); return;
+  }
+  if(sp.t==='star'){
+    toast('⭐','Звезден портал!',`+${sp.d} напред!`); await sl(1700);
+    log(`⭐ ${p.name}: звезден портал +${sp.d}`); await move(pi,sp.d); return;
+  }
+  nextTurn();
+}
+
+function leader(excl){
+  let best=-1,bp=-1;
+  G.players.forEach((p,i)=>{ if(i!==excl&&p.pos>bp){best=i;bp=p.pos;} });
+  return best;
+}
+
+// ──── POWERS ────
+async function usePower(){
+  const p=G.players[G.cur]; if(p.pUsed||G.busy) return;
+  switch(p.hero.id){
+    case 'dragon':
+      p.pUsed=true;
+      G.players.forEach((q,i)=>{ if(i!==G.cur&&q.pos>0) q.pos=Math.max(1,q.pos-2); });
+      renderTokens(); toast('🐉','Драконов огън!','Всички се върнаха 2 клетки!'); await sl(1700);
+      log(`🐉 ${p.name}: Драконов огън!`); renderSidebar(); break;
+    case 'phoenix':
+      p.pUsed=true; p.pShield=true;
+      toast('🦅','Прераждане!','Следващото движение назад е блокирано!'); await sl(1700);
+      log(`🦅 ${p.name}: Прераждане активно!`); renderSidebar(); break;
+    case 'unicorn':{
+      p.pUsed=true; G.busy=true; renderSidebar();
+      const r1=await animDice(), r2=await animDice2();
+      const best=Math.max(r1,r2);
+      toast('🦄','Магия!',`Хвърли ${r1} и ${r2} → взе ${best}!`); await sl(1700);
+      log(`🦄 ${p.name}: ${r1} и ${r2} → ${best}`); await move(G.cur,best);
+      G.busy=false; return;
+    }
+    case 'lion':{
+      const others=G.players.filter((_,i)=>i!==G.cur&&G.players[i].pos>0);
+      if(!others.length){ toast('🦁','Няма цели!','Другите са на старт.'); await sl(1500); return; }
+      p.pUsed=true; renderSidebar(); showTargets(); return;
+    }
+    case 'wolf':{
+      const li=leader(G.cur);
+      if(li===-1||G.players[li].pos<=p.pos){ toast('🐺','Ти си водачът!','Няма кой да е по-напред.'); await sl(1500); return; }
+      p.pUsed=true;
+      const lp=G.players[li],tmp=p.pos; p.pos=lp.pos; lp.pos=tmp;
+      renderTokens(); toast('🐺','Заграбване!',`Размени се с ${lp.name}!`); await sl(1700);
+      log(`🐺 ${p.name}: размени се с ${lp.name}!`); renderSidebar(); break;
+    }
+    case 'fox':
+      p.pUsed=true; p.shield=true;
+      toast('🦊','Хитрост!','Следващата лоша клетка е игнорирана!'); await sl(1700);
+      log(`🦊 ${p.name}: Хитрост активна!`); renderSidebar(); break;
+  }
+}
+
+function showTargets(){
+  const ov=document.getElementById('ov'),ol=document.getElementById('ov-list');
+  ol.innerHTML='';
+  G.players.forEach((q,i)=>{
+    if(i===G.cur||q.pos<1) return;
+    const d=document.createElement('div'); d.className='tgt';
+    d.innerHTML=`<div style="font-size:26px">${q.hero.em}</div><div><div style="font-weight:700;color:${q.color}">${q.name}</div><div style="font-size:11px;color:#a89070">Клетка ${q.pos}</div></div>`;
+    d.onclick=()=>applyLion(i); ol.appendChild(d);
+  });
+  ov.classList.add('on');
+}
+
+async function applyLion(ti){
+  document.getElementById('ov').classList.remove('on');
+  const p=G.players[G.cur],t=G.players[ti];
+  t.pos=Math.max(1,t.pos-3); renderTokens();
+  toast('🦁','Рев!',`${t.name} отиде 3 назад!`); await sl(1700);
+  log(`🦁 ${p.name} изпрати ${t.name} 3 назад!`); renderSidebar();
+}
+
+function cancelTarget(){
+  document.getElementById('ov').classList.remove('on');
+  G.players[G.cur].pUsed=false; renderSidebar();
+}
+
+// ──── TURNS ────
+function nextTurn(){
+  G.cur=(G.cur+1)%G.players.length;
+  G.busy=false; renderSidebar(); renderLog();
+}
+
+function log(m){ G.log.unshift(m); if(G.log.length>25) G.log.pop(); renderLog(); }
+function renderLog(){ document.getElementById('log-box').innerHTML=G.log.slice(0,10).map(m=>`<div>${m}</div>`).join(''); }
+
+// ──── WIN ────
+function showWin(pi){
+  const p=G.players[pi];
+  show('s-win');
+  document.getElementById('w-em').textContent=p.hero.em;
+  document.getElementById('w-title').textContent=`${p.name} спечели!`;
+  document.getElementById('w-sub').textContent=`${p.hero.name} достигна Гнездото на Дракона! 🏰`;
+  confetti();
+}
+
+function confetti(){
+  const w=document.getElementById('cw'); w.innerHTML='';
+  const cols=['#f5c542','#ff6b2b','#9b59b6','#27ae60','#2980b9','#e74c3c'];
+  for(let i=0;i<90;i++){
+    const c=document.createElement('div'); c.className='conf';
+    const sz=5+Math.random()*7;
+    c.style.cssText=`left:${Math.random()*100}%;background:${cols[0|Math.random()*6]};animation-duration:${1.4+Math.random()*2}s;animation-delay:${Math.random()*1.5}s;width:${sz}px;height:${sz}px;border-radius:${Math.random()>.5?'50%':'2px'};`;
+    w.appendChild(c);
+  }
+}
+
+function resetGame(){
+  G={players:[],cur:0,busy:false,log:[],heroes:[]};
+  pCount=0;
+  document.querySelectorAll('.cnt').forEach(b=>b.classList.remove('on'));
+  document.getElementById('hero-area').innerHTML='';
+  document.getElementById('btn-go').style.display='none';
+  document.getElementById('dice').textContent='🎲';
+  show('s-setup');
+}
+
+// ──── TOAST ────
+let tTimer;
+function toast(ic,msg,sub){
+  document.getElementById('t-ic').textContent=ic;
+  document.getElementById('t-msg').textContent=msg;
+  document.getElementById('t-sub').textContent=sub;
+  const t=document.getElementById('toast'); t.classList.add('on');
+  clearTimeout(tTimer); tTimer=setTimeout(()=>t.classList.remove('on'),1600);
+}
+
+// ──── UTILS ────
+function sl(ms){return new Promise(r=>setTimeout(r,ms));}
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ──── PWA ────
+if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
 </body>
 </html>

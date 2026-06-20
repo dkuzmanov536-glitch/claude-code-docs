@@ -1,0 +1,11 @@
+{
+  "name": "Drakon Fejst",
+  "short_name": "Drakon",
+  "description": "Семейна игра с дракони",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#0a0a0f",
+  "orientation": "portrait",
+  "icons": [{"src": "icon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any maskable"}]
+}
