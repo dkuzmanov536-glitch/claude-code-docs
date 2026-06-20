@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="bg">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#0a0a0f">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Drakon Fejst">
+<meta name="apple-mobile-web-app-title" content="Drakon Feast">
 <link rel="manifest" href="manifest.json">
-<title>Drakon Fejst 🐉</title>
+<title>Drakon Feast 🐉</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:system-ui,-apple-system,sans-serif;background:#0a0a0f;color:#f0e6d3;min-height:100vh;user-select:none;overflow-x:hidden}
@@ -119,11 +119,11 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#0a0a0f;color:#f0
 <!-- SETUP -->
 <div id="s-setup" class="screen active">
   <span class="big-dragon">🐉</span>
-  <div class="gtitle">DRAKON FEJST</div>
-  <div class="gsub">Семейна игра с дракони • 2–6 играча</div>
+  <div class="gtitle">DRAKON FEAST</div>
+  <div class="gsub">A family game with dragons • 2–6 players</div>
 
   <div class="sbox">
-    <div class="slabel">Брой играчи</div>
+    <div class="slabel">Number of players</div>
     <div class="cnt-row" id="cnt-row">
       <button class="cnt" onclick="setN(2)">2</button>
       <button class="cnt" onclick="setN(3)">3</button>
@@ -134,7 +134,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#0a0a0f;color:#f0
   </div>
 
   <div id="hero-area"></div>
-  <button class="btn-start" id="btn-go" onclick="startGame()" style="display:none">🐉 Започни играта!</button>
+  <button class="btn-start" id="btn-go" onclick="startGame()" style="display:none">🐉 Start the game!</button>
 </div>
 
 <!-- GAME -->
@@ -145,15 +145,15 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#0a0a0f;color:#f0
       <div class="cur-box" id="cur-box"></div>
       <div class="dice-box">
         <div class="dice" id="dice" onclick="rollDice()">🎲</div>
-        <button class="btn-roll" id="btn-roll" onclick="rollDice()">Хвърли зара!</button>
+        <button class="btn-roll" id="btn-roll" onclick="rollDice()">Roll the dice!</button>
       </div>
       <div>
-        <button class="pwr-btn" id="pwr-btn" onclick="usePower()">⚡ Специална сила</button>
+        <button class="pwr-btn" id="pwr-btn" onclick="usePower()">⚡ Special power</button>
         <div class="pwr-info" id="pwr-info"></div>
       </div>
       <div class="plist" id="plist"></div>
       <div>
-        <div style="font-size:10px;color:#a89070;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px">Събития</div>
+        <div style="font-size:10px;color:#a89070;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px">Events</div>
         <div class="log-box" id="log-box"></div>
       </div>
     </div>
@@ -164,16 +164,16 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#0a0a0f;color:#f0
 <div id="s-win" class="screen">
   <div class="confetti-wrap" id="cw"></div>
   <span class="win-em" id="w-em">🐉</span>
-  <div class="win-title" id="w-title">Победа!</div>
+  <div class="win-title" id="w-title">Victory!</div>
   <div class="win-sub" id="w-sub"></div>
-  <button class="btn-again" onclick="resetGame()">🔄 Играй отново</button>
+  <button class="btn-again" onclick="resetGame()">🔄 Play again</button>
 </div>
 
 <!-- LION TARGET -->
 <div class="overlay" id="ov">
-  <div class="ov-title">🦁 Избери жертва (-3 клетки)</div>
+  <div class="ov-title">🦁 Choose a target (-3 squares)</div>
   <div id="ov-list"></div>
-  <button class="ov-cancel" onclick="cancelTarget()">Откажи</button>
+  <button class="ov-cancel" onclick="cancelTarget()">Cancel</button>
 </div>
 
 <!-- TOAST -->
@@ -187,12 +187,12 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#0a0a0f;color:#f0
 const COLORS=['#f5c542','#ff6b2b','#9b59b6','#27ae60','#2980b9','#e74c3c'];
 const DICE_ICO=['⚀','⚁','⚂','⚃','⚄','⚅'];
 const HEROES=[
-  {id:'dragon', em:'🐉',name:'Дракон',  power:'Всички се връщат 2 клетки назад'},
-  {id:'phoenix',em:'🦅',name:'Феникс',  power:'Следващото движение назад е отменено'},
-  {id:'unicorn',em:'🦄',name:'Единорог',power:'Хвърли 2 пъти, вземи по-голямото'},
-  {id:'lion',   em:'🦁',name:'Лъв',     power:'Изпрати играч 3 клетки назад'},
-  {id:'wolf',   em:'🐺',name:'Вълк',    power:'Размени се с водача'},
-  {id:'fox',    em:'🦊',name:'Лисица',  power:'Игнорирай следващата лоша клетка'},
+  {id:'dragon', em:'🐉',name:'Dragon',  power:'All players move 2 squares back'},
+  {id:'phoenix',em:'🦅',name:'Phoenix', power:'Next backward move is cancelled'},
+  {id:'unicorn',em:'🦄',name:'Unicorn', power:'Roll twice, take the higher result'},
+  {id:'lion',   em:'🦁',name:'Lion',    power:'Send a player 3 squares back'},
+  {id:'wolf',   em:'🐺',name:'Wolf',    power:'Swap places with the leader'},
+  {id:'fox',    em:'🦊',name:'Fox',     power:'Ignore the next bad square'},
 ];
 const SP={
   8: {t:'good',ic:'🐉',col:'#27ae60',d:5},
@@ -231,7 +231,7 @@ function renderHeroSelect(n){
   const a=document.getElementById('hero-area'); a.innerHTML='';
   for(let p=0;p<n;p++){
     const row=document.createElement('div'); row.className='p-row';
-    row.innerHTML=`<div class="p-label" style="color:${COLORS[p]};font-size:12px;font-weight:700">Играч ${p+1} — избери герой</div><div class="hero-grid">${HEROES.map((h,i)=>`<div class="hero-opt ${i===0?'on':''}" style="--hc:${COLORS[p]}" onclick="pickHero(${p},${i})" id="ho-${p}-${i}"><span class="ho-em">${h.em}</span><div class="ho-nm">${h.name}</div><div class="ho-pw">${h.power}</div></div>`).join('')}</div>`;
+    row.innerHTML=`<div class="p-label" style="color:${COLORS[p]};font-size:12px;font-weight:700">Player ${p+1} — choose hero</div><div class="hero-grid">${HEROES.map((h,i)=>`<div class="hero-opt ${i===0?'on':''}" style="--hc:${COLORS[p]}" onclick="pickHero(${p},${i})" id="ho-${p}-${i}"><span class="ho-em">${h.em}</span><div class="ho-nm">${h.name}</div><div class="ho-pw">${h.power}</div></div>`).join('')}</div>`;
     a.appendChild(row);
   }
 }
@@ -244,14 +244,14 @@ function pickHero(p,i){
 
 function startGame(){
   G.players=Array.from({length:pCount},(_,i)=>({
-    name:`Играч ${i+1}`,hero:HEROES[G.heroes[i]],
+    name:`Player ${i+1}`,hero:HEROES[G.heroes[i]],
     color:COLORS[i],pos:0,pUsed:false,skip:false,shield:false,pShield:false
   }));
   G.cur=0; G.busy=false; G.log=[];
   show('s-game');
   buildBoard();
   renderSidebar();
-  log('🐉 Играта започна!');
+  log('🐉 The game has started!');
 }
 
 // ──── BOARD ────
@@ -291,26 +291,26 @@ function renderSidebar(){
   const p=G.players[G.cur];
   const cb=document.getElementById('cur-box');
   cb.style.setProperty('--cc',p.color);
-  cb.innerHTML=`<div class="cur-em">${p.hero.em}</div><div class="cur-name">${p.name} · ${p.hero.name}</div><div class="cur-info">${p.skip?'💤 Пропуска хода!':'Твой ред е!'}</div>`;
+  cb.innerHTML=`<div class="cur-em">${p.hero.em}</div><div class="cur-name">${p.name} · ${p.hero.name}</div><div class="cur-info">${p.skip?'💤 Skipping turn!':'Your turn!'}</div>`;
   const rb=document.getElementById('btn-roll');
   rb.disabled=G.busy;
-  rb.textContent=p.skip?'💤 Пропускаш хода':'🎲 Хвърли зара!';
+  rb.textContent=p.skip?'💤 Skipping turn':'🎲 Roll the dice!';
   const pb=document.getElementById('pwr-btn');
   pb.disabled=p.pUsed||G.busy;
-  pb.textContent=`${p.hero.em} ${p.hero.name}: Специална сила`;
-  document.getElementById('pwr-info').textContent=p.pUsed?'Вече използвана':p.hero.power;
+  pb.textContent=`${p.hero.em} ${p.hero.name}: Special power`;
+  document.getElementById('pwr-info').textContent=p.pUsed?'Already used':p.hero.power;
   const pl=document.getElementById('plist');
-  pl.innerHTML=G.players.map((q,i)=>`<div class="pitem ${i===G.cur?'cur':''}" style="--pc:${q.color}"><div class="pdot">${q.hero.em}</div><div class="pinfo"><div class="pname">${q.name}</div><div class="ppos">Клетка ${q.pos||'Старт'}${q.skip?' 💤':''}</div></div></div>`).join('');
+  pl.innerHTML=G.players.map((q,i)=>`<div class="pitem ${i===G.cur?'cur':''}" style="--pc:${q.color}"><div class="pdot">${q.hero.em}</div><div class="pinfo"><div class="pname">${q.name}</div><div class="ppos">Square ${q.pos||'Start'}${q.skip?' 💤':''}</div></div></div>`).join('');
 }
 
 // ──── DICE ────
 async function rollDice(){
   if(G.busy) return;
   const p=G.players[G.cur];
-  if(p.skip){ p.skip=false; log(`💤 ${p.name} пропуска хода.`); nextTurn(); return; }
+  if(p.skip){ p.skip=false; log(`💤 ${p.name} skips their turn.`); nextTurn(); return; }
   G.busy=true; renderSidebar();
   const n=await animDice();
-  log(`🎲 ${p.name} хвърли ${n}`);
+  log(`🎲 ${p.name} rolled ${n}`);
   await move(G.cur,n);
   G.busy=false;
 }
@@ -344,8 +344,8 @@ async function move(pi,steps){
   const back=steps<0;
   if(back && p.pShield){
     p.pShield=false;
-    toast('🦅','Феникс те защити!','Не се връщаш назад!'); await sl(1700);
-    log(`🦅 ${p.name}: Феникс блокира движението назад!`);
+    toast('🦅','Phoenix protected you!','You don\'t go back!'); await sl(1700);
+    log(`🦅 ${p.name}: Phoenix blocked the backward move!`);
     nextTurn(); return;
   }
   const abs=Math.abs(steps);
@@ -363,38 +363,38 @@ async function applyCell(pi){
   if(!sp){ nextTurn(); return; }
   if(p.shield && (sp.t==='bad'||sp.t==='sleep')){
     p.shield=false;
-    toast('🦊','Лисица те защити!','Лошата клетка е пропусната!'); await sl(1700);
-    log(`🦊 ${p.name} избегна ${sp.ic}`);
+    toast('🦊','Fox protected you!','The bad square was skipped!'); await sl(1700);
+    log(`🦊 ${p.name} avoided ${sp.ic}`);
     nextTurn(); return;
   }
   if(sp.t==='good'){
-    toast('🐉','Добър дракон!',`+${sp.d} клетки напред!`); await sl(1700);
-    log(`🐉 ${p.name}: добър дракон! +${sp.d}`); await move(pi,sp.d); return;
+    toast('🐉','Good dragon!',`+${sp.d} squares forward!`); await sl(1700);
+    log(`🐉 ${p.name}: good dragon! +${sp.d}`); await move(pi,sp.d); return;
   }
   if(sp.t==='bad'){
-    toast('🔥','Лош дракон!',`${sp.d} клетки назад!`); await sl(1700);
-    log(`🔥 ${p.name}: лош дракон! ${sp.d}`); await move(pi,sp.d); return;
+    toast('🔥','Bad dragon!',`${sp.d} squares back!`); await sl(1700);
+    log(`🔥 ${p.name}: bad dragon! ${sp.d}`); await move(pi,sp.d); return;
   }
   if(sp.t==='fwd2'){
-    toast('⏩','2 хода напред!','+2 клетки!'); await sl(1700);
-    log(`⏩ ${p.name}: +2 клетки напред!`); await move(pi,2); return;
+    toast('⏩','2 moves forward!','+2 squares!'); await sl(1700);
+    log(`⏩ ${p.name}: +2 squares forward!`); await move(pi,2); return;
   }
   if(sp.t==='swap'){
     const li=leader(pi);
     if(li!==-1){
       const lp=G.players[li],tmp=p.pos; p.pos=lp.pos; lp.pos=tmp;
-      toast('🔄','Размяна!',`${p.name} ↔ ${lp.name}`); renderTokens(); await sl(1700);
+      toast('🔄','Swap!',`${p.name} ↔ ${lp.name}`); renderTokens(); await sl(1700);
       log(`🔄 ${p.name} ↔ ${lp.name}`);
     }
     nextTurn(); return;
   }
   if(sp.t==='sleep'){
-    p.skip=true; toast('💤','Сън!','Пропускаш следващия ход!'); await sl(1700);
-    log(`💤 ${p.name} заспа!`); nextTurn(); return;
+    p.skip=true; toast('💤','Sleep!','Skip your next turn!'); await sl(1700);
+    log(`💤 ${p.name} fell asleep!`); nextTurn(); return;
   }
   if(sp.t==='star'){
-    toast('⭐','Звезден портал!',`+${sp.d} напред!`); await sl(1700);
-    log(`⭐ ${p.name}: звезден портал +${sp.d}`); await move(pi,sp.d); return;
+    toast('⭐','Star portal!',`+${sp.d} forward!`); await sl(1700);
+    log(`⭐ ${p.name}: star portal +${sp.d}`); await move(pi,sp.d); return;
   }
   nextTurn();
 }
@@ -412,37 +412,37 @@ async function usePower(){
     case 'dragon':
       p.pUsed=true;
       G.players.forEach((q,i)=>{ if(i!==G.cur&&q.pos>0) q.pos=Math.max(1,q.pos-2); });
-      renderTokens(); toast('🐉','Драконов огън!','Всички се върнаха 2 клетки!'); await sl(1700);
-      log(`🐉 ${p.name}: Драконов огън!`); renderSidebar(); break;
+      renderTokens(); toast('🐉','Dragon Fire!','Everyone moved back 2 squares!'); await sl(1700);
+      log(`🐉 ${p.name}: Dragon Fire!`); renderSidebar(); break;
     case 'phoenix':
       p.pUsed=true; p.pShield=true;
-      toast('🦅','Прераждане!','Следващото движение назад е блокирано!'); await sl(1700);
-      log(`🦅 ${p.name}: Прераждане активно!`); renderSidebar(); break;
+      toast('🦅','Rebirth!','Next backward move is blocked!'); await sl(1700);
+      log(`🦅 ${p.name}: Rebirth active!`); renderSidebar(); break;
     case 'unicorn':{
       p.pUsed=true; G.busy=true; renderSidebar();
       const r1=await animDice(), r2=await animDice2();
       const best=Math.max(r1,r2);
-      toast('🦄','Магия!',`Хвърли ${r1} и ${r2} → взе ${best}!`); await sl(1700);
-      log(`🦄 ${p.name}: ${r1} и ${r2} → ${best}`); await move(G.cur,best);
+      toast('🦄','Magic!',`Rolled ${r1} and ${r2} → took ${best}!`); await sl(1700);
+      log(`🦄 ${p.name}: ${r1} and ${r2} → ${best}`); await move(G.cur,best);
       G.busy=false; return;
     }
     case 'lion':{
       const others=G.players.filter((_,i)=>i!==G.cur&&G.players[i].pos>0);
-      if(!others.length){ toast('🦁','Няма цели!','Другите са на старт.'); await sl(1500); return; }
+      if(!others.length){ toast('🦁','No targets!','Others are at start.'); await sl(1500); return; }
       p.pUsed=true; renderSidebar(); showTargets(); return;
     }
     case 'wolf':{
       const li=leader(G.cur);
-      if(li===-1||G.players[li].pos<=p.pos){ toast('🐺','Ти си водачът!','Няма кой да е по-напред.'); await sl(1500); return; }
+      if(li===-1||G.players[li].pos<=p.pos){ toast('🐺','You are the leader!','No one is ahead of you.'); await sl(1500); return; }
       p.pUsed=true;
       const lp=G.players[li],tmp=p.pos; p.pos=lp.pos; lp.pos=tmp;
-      renderTokens(); toast('🐺','Заграбване!',`Размени се с ${lp.name}!`); await sl(1700);
-      log(`🐺 ${p.name}: размени се с ${lp.name}!`); renderSidebar(); break;
+      renderTokens(); toast('🐺','Takeover!',`Swapped with ${lp.name}!`); await sl(1700);
+      log(`🐺 ${p.name}: swapped with ${lp.name}!`); renderSidebar(); break;
     }
     case 'fox':
       p.pUsed=true; p.shield=true;
-      toast('🦊','Хитрост!','Следващата лоша клетка е игнорирана!'); await sl(1700);
-      log(`🦊 ${p.name}: Хитрост активна!`); renderSidebar(); break;
+      toast('🦊','Cunning!','Next bad square is ignored!'); await sl(1700);
+      log(`🦊 ${p.name}: Cunning active!`); renderSidebar(); break;
   }
 }
 
@@ -452,7 +452,7 @@ function showTargets(){
   G.players.forEach((q,i)=>{
     if(i===G.cur||q.pos<1) return;
     const d=document.createElement('div'); d.className='tgt';
-    d.innerHTML=`<div style="font-size:26px">${q.hero.em}</div><div><div style="font-weight:700;color:${q.color}">${q.name}</div><div style="font-size:11px;color:#a89070">Клетка ${q.pos}</div></div>`;
+    d.innerHTML=`<div style="font-size:26px">${q.hero.em}</div><div><div style="font-weight:700;color:${q.color}">${q.name}</div><div style="font-size:11px;color:#a89070">Square ${q.pos}</div></div>`;
     d.onclick=()=>applyLion(i); ol.appendChild(d);
   });
   ov.classList.add('on');
@@ -462,8 +462,8 @@ async function applyLion(ti){
   document.getElementById('ov').classList.remove('on');
   const p=G.players[G.cur],t=G.players[ti];
   t.pos=Math.max(1,t.pos-3); renderTokens();
-  toast('🦁','Рев!',`${t.name} отиде 3 назад!`); await sl(1700);
-  log(`🦁 ${p.name} изпрати ${t.name} 3 назад!`); renderSidebar();
+  toast('🦁','Roar!',`${t.name} went back 3!`); await sl(1700);
+  log(`🦁 ${p.name} sent ${t.name} back 3!`); renderSidebar();
 }
 
 function cancelTarget(){
@@ -485,8 +485,8 @@ function showWin(pi){
   const p=G.players[pi];
   show('s-win');
   document.getElementById('w-em').textContent=p.hero.em;
-  document.getElementById('w-title').textContent=`${p.name} спечели!`;
-  document.getElementById('w-sub').textContent=`${p.hero.name} достигна Гнездото на Дракона! 🏰`;
+  document.getElementById('w-title').textContent=`${p.name} wins!`;
+  document.getElementById('w-sub').textContent=`${p.hero.name} reached the Dragon's Nest! 🏰`;
   confetti();
 }
 
