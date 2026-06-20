@@ -68,7 +68,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#0a0a0f;color:#f0
 .cur-info{font-size:11px;color:#a89070}
 
 .dice-box{text-align:center}
-.dice{width:64px;height:64px;background:#fff;border-radius:13px;display:inline-flex;align-items:center;justify-content:center;font-size:32px;cursor:pointer;margin:6px auto;box-shadow:0 4px 18px rgba(0,0,0,.5);transition:transform .1s;display:inline-block;line-height:64px;text-align:center}
+.dice{width:64px;height:64px;background:#fff;border-radius:13px;display:inline-block;line-height:64px;text-align:center;font-size:32px;cursor:pointer;margin:6px auto;box-shadow:0 4px 18px rgba(0,0,0,.5);transition:transform .1s}
 .dice:active{transform:scale(.9)}
 .dice.spin{animation:dspin .55s ease}
 @keyframes dspin{0%{transform:rotate(0) scale(1)}25%{transform:rotate(22deg) scale(1.12)}60%{transform:rotate(-14deg) scale(.93)}100%{transform:rotate(0) scale(1)}}
@@ -203,9 +203,9 @@ const SP={
   30:{t:'bad', ic:'🔥',col:'#e74c3c',d:-4},
   43:{t:'bad', ic:'🔥',col:'#e74c3c',d:-4},
   56:{t:'bad', ic:'🔥',col:'#e74c3c',d:-5},
-  11:{t:'gem', ic:'💎',col:'#f5c542'},
-  26:{t:'gem', ic:'💎',col:'#f5c542'},
-  41:{t:'gem', ic:'💎',col:'#f5c542'},
+  11:{t:'fwd2',ic:'⏩',col:'#00bcd4',d:2},
+  26:{t:'fwd2',ic:'⏩',col:'#00bcd4',d:2},
+  41:{t:'fwd2',ic:'⏩',col:'#00bcd4',d:2},
   19:{t:'swap',ic:'🔄',col:'#2980b9'},
   36:{t:'swap',ic:'🔄',col:'#2980b9'},
   13:{t:'sleep',ic:'💤',col:'#9b59b6'},
@@ -276,7 +276,7 @@ function buildBoard(){
 
 function renderTokens(){
   document.querySelectorAll('.cell-tok').forEach(e=>e.innerHTML='');
-  G.players.forEach((p,i)=>{
+  G.players.forEach((p)=>{
     if(p.pos<1) return;
     const c=document.getElementById('t'+p.pos);
     if(!c) return;
@@ -342,7 +342,6 @@ function rnd6(){ return Math.ceil(Math.random()*6); }
 async function move(pi,steps){
   const p=G.players[pi];
   const back=steps<0;
-  // Phoenix shield: block backward movement
   if(back && p.pShield){
     p.pShield=false;
     toast('🦅','Феникс те защити!','Не се връщаш назад!'); await sl(1700);
@@ -362,7 +361,6 @@ async function move(pi,steps){
 async function applyCell(pi){
   const p=G.players[pi],sp=SP[p.pos];
   if(!sp){ nextTurn(); return; }
-  // Fox/shield
   if(p.shield && (sp.t==='bad'||sp.t==='sleep')){
     p.shield=false;
     toast('🦊','Лисица те защити!','Лошата клетка е пропусната!'); await sl(1700);
@@ -377,10 +375,9 @@ async function applyCell(pi){
     toast('🔥','Лош дракон!',`${sp.d} клетки назад!`); await sl(1700);
     log(`🔥 ${p.name}: лош дракон! ${sp.d}`); await move(pi,sp.d); return;
   }
-  if(sp.t==='gem'){
-    const gems=[11,26,41],nx=gems.filter(g=>g>p.pos)[0]||60;
-    toast('💎','Съкровище!',`Скачаш до клетка ${nx}!`); await sl(1700);
-    log(`💎 ${p.name}: съкровище → ${nx}`); await move(pi,nx-p.pos); return;
+  if(sp.t==='fwd2'){
+    toast('⏩','2 хода напред!','+2 клетки!'); await sl(1700);
+    log(`⏩ ${p.name}: +2 клетки напред!`); await move(pi,2); return;
   }
   if(sp.t==='swap'){
     const li=leader(pi);
