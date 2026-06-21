@@ -5,52 +5,81 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="theme-color" content="#0a0a0f">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Победи тигъра">
+<meta name="apple-mobile-web-app-title" content="Игри">
 <link rel="manifest" href="manifest.json">
-<title>Победи тигъра 🐯</title>
+<title>Игри 🎮</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:system-ui,-apple-system,sans-serif;background:#0a0a0f;color:#f0e6d3;min-height:100vh;user-select:none;overflow-x:hidden}
-
 .screen{display:none;min-height:100vh}
 .screen.active{display:flex}
 
-/* ── HOME ── */
-#s-home{flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;background:radial-gradient(ellipse at 50% 0%,#3a1500 0%,#0a0a0f 65%)}
-.big-lion{font-size:64px;animation:float 3s ease-in-out infinite;display:block;text-align:center;margin-bottom:12px}
+/* HUB */
+#s-hub{flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;background:radial-gradient(ellipse at 50% 0%,#1a0030 0%,#0a0a0f 70%)}
+.hub-title{font-size:clamp(22px,6vw,44px);font-weight:900;letter-spacing:2px;background:linear-gradient(135deg,#f5c542,#ff8c00,#e74c3c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;margin-bottom:36px}
+.hub-cards{display:flex;flex-direction:column;gap:16px;width:100%;max-width:340px}
+.hub-card{background:#12121a;border:2px solid #2a2a3e;border-radius:18px;padding:24px 20px;text-align:center;cursor:pointer;transition:all .2s}
+.hub-card:hover{transform:scale(1.02)}
+.hub-card:active{transform:scale(.97)}
+.hub-card.tiger:hover{border-color:#ff8c00}
+.hub-card.dragon:hover{border-color:#9b59b6}
+.hc-em{font-size:52px;display:block;margin-bottom:10px}
+.hc-name{font-size:20px;font-weight:900;letter-spacing:1px;margin-bottom:6px}
+.hc-sub{font-size:12px;color:#a89070}
+.hub-card.tiger .hc-name{background:linear-gradient(135deg,#f5c542,#ff8c00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hub-card.dragon .hc-name{background:linear-gradient(135deg,#9b59b6,#4a90e2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* HOME */
+#s-home{flex-direction:column;align-items:center;justify-content:center;padding:40px 24px}
+.big-icon{font-size:64px;animation:float 3s ease-in-out infinite;display:block;text-align:center;margin-bottom:12px}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-.gtitle{font-size:clamp(28px,8vw,62px);font-weight:900;letter-spacing:2px;background:linear-gradient(135deg,#f5c542,#ff8c00,#e74c3c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;margin-bottom:6px}
+.gtitle{font-size:clamp(28px,8vw,62px);font-weight:900;letter-spacing:2px;text-align:center;margin-bottom:6px}
+.gtitle.tiger{background:linear-gradient(135deg,#f5c542,#ff8c00,#e74c3c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.gtitle.dragon{background:linear-gradient(135deg,#9b59b6,#4a90e2,#27ae60);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .gsub{font-size:13px;color:#a89070;text-align:center;margin-bottom:36px}
 .home-btns{display:flex;flex-direction:column;gap:14px;width:100%;max-width:300px;margin-bottom:16px}
 .btn-home{width:100%;padding:18px;border-radius:14px;font-size:20px;font-weight:700;border:none;cursor:pointer;letter-spacing:.5px;display:flex;align-items:center;justify-content:center;gap:10px;transition:opacity .2s,transform .1s}
 .btn-home:active{transform:scale(.97)}
-.btn-play{background:linear-gradient(135deg,#ff8c00,#e74c3c);color:#fff}
+.btn-play-tiger{background:linear-gradient(135deg,#ff8c00,#e74c3c);color:#fff}
+.btn-play-dragon{background:linear-gradient(135deg,#9b59b6,#4a90e2);color:#fff}
 .btn-rules-home{background:#1a1a2e;color:#f0e6d3;border:2px solid #2a2a3e}
 .btn-db{background:transparent;color:#a89070;font-size:14px;border:none;cursor:pointer;margin-top:4px;padding:8px}
 .btn-db:hover{color:#f5c542}
+.btn-switch{background:transparent;color:#604a80;font-size:12px;border:none;cursor:pointer;margin-top:8px;padding:6px}
+.btn-switch:hover{color:#a89070}
 
-/* ── SETUP ── */
-#s-setup{flex-direction:column;align-items:center;justify-content:flex-start;padding:24px 16px 48px;background:radial-gradient(ellipse at 50% 0%,#3a1500 0%,#0a0a0f 65%)}
+/* SETUP */
+#s-setup{flex-direction:column;align-items:center;justify-content:flex-start;padding:24px 16px 48px}
 .sbox{width:100%;max-width:440px;margin-bottom:22px}
 .slabel{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:#a89070;margin-bottom:10px}
 .cnt-row{display:flex;gap:8px}
 .cnt{flex:1;padding:12px 0;border-radius:10px;border:2px solid #2a2a3e;background:#12121a;color:#f0e6d3;font-size:20px;font-weight:700;cursor:pointer;transition:all .2s}
 .cnt.on{border-color:#ff8c00;background:rgba(255,140,0,.12);color:#ff8c00}
-.lion-preview{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;width:100%;max-width:440px;margin-bottom:20px}
+.lion-preview{display:grid;gap:8px;width:100%;max-width:440px;margin-bottom:20px}
 .lion-card{background:#12121a;border:2px solid var(--lc);border-radius:12px;padding:12px 8px;text-align:center}
 .lc-em{font-size:30px;display:block;margin-bottom:5px}
 .lc-nm{font-size:13px;font-weight:700;color:var(--lc);margin-bottom:4px}
 .lc-pw{font-size:10px;color:#604a80;line-height:1.4}
 .p-row{margin-bottom:16px;width:100%;max-width:440px}
-.btn-start{width:100%;max-width:440px;padding:15px;border-radius:13px;background:linear-gradient(135deg,#ff8c00,#e74c3c);color:#fff;font-size:17px;font-weight:700;border:none;cursor:pointer;margin-top:10px;letter-spacing:.5px}
+.p-label{font-size:12px;font-weight:700;margin-bottom:8px;letter-spacing:.5px}
+.hero-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.hero-opt{background:#12121a;border:2px solid #2a2a3e;border-radius:10px;padding:10px 5px;text-align:center;cursor:pointer;transition:all .2s}
+.hero-opt.on{border-color:var(--hc);background:rgba(255,255,255,.04)}
+.hero-opt:active{transform:scale(.96)}
+.ho-em{font-size:24px;display:block;margin-bottom:4px}
+.ho-nm{font-size:11px;font-weight:700;color:#f0e6d3}
+.ho-pw{font-size:9px;color:#604a80;line-height:1.3;margin-top:3px}
+.btn-start{width:100%;max-width:440px;padding:15px;border-radius:13px;color:#fff;font-size:17px;font-weight:700;border:none;cursor:pointer;margin-top:10px;letter-spacing:.5px}
+.btn-start.tiger{background:linear-gradient(135deg,#ff8c00,#e74c3c)}
+.btn-start.dragon{background:linear-gradient(135deg,#9b59b6,#4a90e2)}
 .btn-start:hover{opacity:.9}
 
-/* ── BACK ── */
+/* BACK */
 .btn-back{background:transparent;border:1px solid #2a2a3e;color:#a89070;padding:7px 16px;border-radius:8px;font-size:13px;cursor:pointer;margin-bottom:18px;align-self:flex-start}
 .btn-back:hover{border-color:#ff8c00;color:#f0e6d3}
 
-/* ── RULES ── */
-#s-rules{flex-direction:column;align-items:center;padding:24px 16px 48px;background:#0a0a0f;overflow-y:auto}
+/* RULES */
+#s-rules-tiger,#s-rules-dragon{flex-direction:column;align-items:center;padding:24px 16px 48px;background:#0a0a0f;overflow-y:auto}
 .rules-wrap{width:100%;max-width:500px}
 .rules-h{font-size:19px;font-weight:700;color:#f5c542;margin:24px 0 10px;padding-bottom:7px;border-bottom:1px solid #1e1e2e}
 .cell-rule{display:flex;align-items:flex-start;gap:12px;padding:9px 0;border-bottom:1px solid #111118}
@@ -65,7 +94,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#0a0a0f;color:#f0
 .rules-steps li{padding:8px 0 8px 32px;position:relative;font-size:13px;color:#a89070;border-bottom:1px solid #111118;counter-increment:step}
 .rules-steps li::before{content:counter(step);position:absolute;left:0;top:9px;width:20px;height:20px;background:#ff8c00;border-radius:50%;font-size:11px;font-weight:700;color:#fff;line-height:20px;text-align:center}
 
-/* ── RESULTS / DB ── */
+/* RESULTS */
 #s-results{flex-direction:column;align-items:center;padding:24px 16px 48px;background:#0a0a0f;overflow-y:auto}
 .res-empty{color:#a89070;font-size:14px;text-align:center;padding:40px 0}
 .res-item{display:flex;align-items:center;gap:10px;background:#12121a;border:1px solid #1e1e2e;border-radius:10px;padding:12px 14px;margin-bottom:8px;width:100%;max-width:500px}
@@ -77,8 +106,10 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#0a0a0f;color:#f0
 .res-count{font-size:12px;color:#a89070;margin-bottom:10px;text-align:center;width:100%;max-width:500px}
 .btn-clear{display:block;margin:14px auto 0;background:transparent;border:1px solid #e74c3c;color:#e74c3c;padding:8px 20px;border-radius:8px;font-size:12px;cursor:pointer}
 .btn-clear:hover{background:#e74c3c;color:#fff}
+.btn-switch-res{display:block;margin:0 auto 16px;background:#1a1a2e;border:1px solid #2a2a3e;color:#a89070;padding:8px 18px;border-radius:8px;font-size:12px;cursor:pointer;width:100%;max-width:500px}
+.btn-switch-res:hover{border-color:#f5c542;color:#f5c542}
 
-/* ── GAME ── */
+/* GAME */
 #s-game{flex-direction:column;background:#0a0a0f}
 .game-wrap{display:grid;grid-template-columns:1fr 250px;height:100vh;max-height:100vh}
 @media(max-width:680px){.game-wrap{grid-template-columns:1fr;grid-template-rows:auto 1fr;height:auto}}
@@ -91,8 +122,6 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#0a0a0f;color:#f0
 .tok{border-radius:50%;border:2px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;font-size:clamp(7px,1.2vw,11px);width:clamp(11px,2vw,16px);height:clamp(11px,2vw,16px);background:var(--tc);transition:all .35s}
 .cell.sp{border-color:var(--sc)}
 .cell.fin{background:linear-gradient(135deg,rgba(231,76,60,.2),rgba(245,197,66,.15));border-color:#e74c3c}
-
-/* SIDEBAR */
 .sidebar{background:#0e0e18;border-left:1px solid #1e1e2e;display:flex;flex-direction:column;gap:12px;padding:12px;overflow-y:auto}
 @media(max-width:680px){.sidebar{border-left:none;border-top:1px solid #1e1e2e;height:auto}}
 .cur-box{background:#1a1a2e;border-radius:11px;padding:12px;border:2px solid var(--cc,#ff8c00);text-align:center}
@@ -147,42 +176,55 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#0a0a0f;color:#f0
 </head>
 <body>
 
+<!-- HUB -->
+<div id="s-hub" class="screen active">
+  <div class="hub-title">🎮 Избери игра</div>
+  <div class="hub-cards">
+    <div class="hub-card tiger" onclick="selectGame('tiger')">
+      <span class="hc-em">🦁</span>
+      <div class="hc-name">ПОБЕДИ ТИГЪРА</div>
+      <div class="hc-sub">2–4 играча · Лъвове</div>
+    </div>
+    <div class="hub-card dragon" onclick="selectGame('dragon')">
+      <span class="hc-em">🐉</span>
+      <div class="hc-name">DRAGON FACE</div>
+      <div class="hc-sub">2–6 играча · Герои</div>
+    </div>
+  </div>
+</div>
+
 <!-- HOME -->
-<div id="s-home" class="screen active">
-  <span class="big-lion">🦁</span>
-  <div class="gtitle">ПОБЕДИ ТИГЪРА</div>
-  <div class="gsub">Семейна игра с лъвове • 2–4 играча</div>
+<div id="s-home" class="screen">
+  <span class="big-icon" id="home-em">🦁</span>
+  <div class="gtitle tiger" id="home-title">ПОБЕДИ ТИГЪРА</div>
+  <div class="gsub" id="home-sub">Семейна игра с лъвове · 2–4 играча</div>
   <div class="home-btns">
-    <button class="btn-home btn-play" onclick="show('s-setup')">🦁 Играй</button>
-    <button class="btn-home btn-rules-home" onclick="show('s-rules')">📖 Правила</button>
+    <button class="btn-home btn-play-tiger" id="home-play-btn" onclick="show('s-setup')">🦁 Играй</button>
+    <button class="btn-home btn-rules-home" onclick="showRules()">📖 Правила</button>
   </div>
   <button class="btn-db" onclick="showResults()">🏆 Резултати</button>
+  <button class="btn-switch" onclick="show('s-hub')">← Смени игра</button>
 </div>
 
 <!-- SETUP -->
 <div id="s-setup" class="screen">
   <button class="btn-back" onclick="show('s-home')">← Назад</button>
-  <span class="big-lion" style="font-size:42px;margin-bottom:8px">🦁</span>
-  <div class="gtitle" style="font-size:clamp(20px,5vw,36px);margin-bottom:4px">ПОБЕДИ ТИГЪРА</div>
-  <div class="gsub">Кои лъвове играят?</div>
+  <span class="big-icon" id="setup-em" style="font-size:42px;margin-bottom:8px">🦁</span>
+  <div class="gtitle tiger" id="setup-title" style="font-size:clamp(20px,5vw,36px);margin-bottom:4px">ПОБЕДИ ТИГЪРА</div>
+  <div class="gsub" id="setup-sub">Кои лъвове играят?</div>
   <div class="sbox">
     <div class="slabel">Брой играчи</div>
-    <div class="cnt-row" id="cnt-row">
-      <button class="cnt" onclick="setN(2)">2</button>
-      <button class="cnt" onclick="setN(3)">3</button>
-      <button class="cnt" onclick="setN(4)">4</button>
-    </div>
+    <div class="cnt-row" id="cnt-row"></div>
   </div>
   <div id="hero-area"></div>
-  <button class="btn-start" id="btn-go" onclick="startGame()" style="display:none">🐯 Към битката!</button>
+  <button class="btn-start tiger" id="btn-go" onclick="startGame()" style="display:none">🐯 Към битката!</button>
 </div>
 
-<!-- RULES -->
-<div id="s-rules" class="screen">
+<!-- RULES TIGER -->
+<div id="s-rules-tiger" class="screen">
   <div class="rules-wrap">
     <button class="btn-back" onclick="show('s-home')">← Назад</button>
-
-    <div class="rules-h" style="margin-top:0">Как се играе</div>
+    <div class="rules-h" style="margin-top:0">Как се играе — Победи тигъра</div>
     <ol class="rules-steps">
       <li>Изберете брой играчи от 2 до 4</li>
       <li>Всеки играч е лъв с уникален цвят и сила</li>
@@ -191,62 +233,57 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#0a0a0f;color:#f0
       <li>Специалната сила се използва само веднъж за игра</li>
       <li>Първият, стигнал клетка 60 🐯, победи тигъра!</li>
     </ol>
-
     <div class="rules-h">Специални клетки</div>
-    <div class="cell-rule">
-      <div class="cr-ic">🦁</div>
-      <div class="cr-txt"><strong>Приятел лъв</strong><span>Придвижи се 5 клетки напред</span></div>
-    </div>
-    <div class="cell-rule">
-      <div class="cr-ic">🐯</div>
-      <div class="cr-txt"><strong>Тигърска засада</strong><span>Върни се 4–5 клетки назад</span></div>
-    </div>
-    <div class="cell-rule">
-      <div class="cr-ic">⏩</div>
-      <div class="cr-txt"><strong>Бонус ход</strong><span>2 допълнителни клетки напред</span></div>
-    </div>
-    <div class="cell-rule">
-      <div class="cr-ic">🔄</div>
-      <div class="cr-txt"><strong>Размяна</strong><span>Разменяш позицията с водача</span></div>
-    </div>
-    <div class="cell-rule">
-      <div class="cr-ic">💤</div>
-      <div class="cr-txt"><strong>Сън</strong><span>Пропускаш следващия си ход</span></div>
-    </div>
-    <div class="cell-rule">
-      <div class="cr-ic">⭐</div>
-      <div class="cr-txt"><strong>Звезден портал</strong><span>Скок от 8 клетки напред</span></div>
-    </div>
-    <div class="cell-rule">
-      <div class="cr-ic">🐯</div>
-      <div class="cr-txt"><strong>Тигърът!</strong><span>Клетка 60 — финал! Победа!</span></div>
-    </div>
-
+    <div class="cell-rule"><div class="cr-ic">🦁</div><div class="cr-txt"><strong>Приятел лъв</strong><span>Придвижи се 5 клетки напред</span></div></div>
+    <div class="cell-rule"><div class="cr-ic">🐯</div><div class="cr-txt"><strong>Тигърска засада</strong><span>Върни се 4–5 клетки назад</span></div></div>
+    <div class="cell-rule"><div class="cr-ic">⏩</div><div class="cr-txt"><strong>Бонус ход</strong><span>2 допълнителни клетки напред</span></div></div>
+    <div class="cell-rule"><div class="cr-ic">🔄</div><div class="cr-txt"><strong>Размяна</strong><span>Разменяш позицията с водача</span></div></div>
+    <div class="cell-rule"><div class="cr-ic">💤</div><div class="cr-txt"><strong>Сън</strong><span>Пропускаш следващия си ход</span></div></div>
+    <div class="cell-rule"><div class="cr-ic">⭐</div><div class="cr-txt"><strong>Звезден портал</strong><span>Скок от 8 клетки напред</span></div></div>
     <div class="rules-h">Лъвове и сили</div>
-    <div class="hero-rule" style="--hrc:#ff8c00">
-      <div class="hr-em">🦁</div>
-      <div class="hr-txt"><strong style="color:#ff8c00">Оранжев лъв</strong><span>Изпрати избран играч 3 клетки назад</span></div>
-    </div>
-    <div class="hero-rule" style="--hrc:#4a90e2">
-      <div class="hr-em">🦁</div>
-      <div class="hr-txt"><strong style="color:#4a90e2">Син лъв</strong><span>Игнорирай следващата лоша клетка</span></div>
-    </div>
-    <div class="hero-rule" style="--hrc:#e74c3c">
-      <div class="hr-em">🦁</div>
-      <div class="hr-txt"><strong style="color:#e74c3c">Червен лъв</strong><span>Хвърли зара 2 пъти, вземи по-голямото</span></div>
-    </div>
-    <div class="hero-rule" style="--hrc:#aaaaaa">
-      <div class="hr-em">🦁</div>
-      <div class="hr-txt"><strong style="color:#aaaaaa">Черен лъв</strong><span>Всички останали се връщат 2 клетки назад</span></div>
-    </div>
+    <div class="hero-rule" style="--hrc:#ff8c00"><div class="hr-em">🦁</div><div class="hr-txt"><strong style="color:#ff8c00">Оранжев лъв</strong><span>Изпрати избран играч 3 клетки назад</span></div></div>
+    <div class="hero-rule" style="--hrc:#4a90e2"><div class="hr-em">🦁</div><div class="hr-txt"><strong style="color:#4a90e2">Син лъв</strong><span>Игнорирай следващата лоша клетка</span></div></div>
+    <div class="hero-rule" style="--hrc:#e74c3c"><div class="hr-em">🦁</div><div class="hr-txt"><strong style="color:#e74c3c">Червен лъв</strong><span>Хвърли зара 2 пъти, вземи по-голямото</span></div></div>
+    <div class="hero-rule" style="--hrc:#9e9e9e"><div class="hr-em">🦁</div><div class="hr-txt"><strong style="color:#9e9e9e">Черен лъв</strong><span>Всички останали се връщат 2 клетки назад</span></div></div>
   </div>
 </div>
 
-<!-- RESULTS / DB -->
+<!-- RULES DRAGON -->
+<div id="s-rules-dragon" class="screen">
+  <div class="rules-wrap">
+    <button class="btn-back" onclick="show('s-home')">← Назад</button>
+    <div class="rules-h" style="margin-top:0">Как се играе — Dragon Face</div>
+    <ol class="rules-steps">
+      <li>Изберете брой играчи от 2 до 6</li>
+      <li>Всеки играч избира свой герой</li>
+      <li>На свой ред хвърляйте зара и се придвижвайте</li>
+      <li>Кацнете на специална клетка — получавате ефект</li>
+      <li>Специалната сила се използва само веднъж за игра</li>
+      <li>Първият, стигнал клетка 60 🐉, победи дракона!</li>
+    </ol>
+    <div class="rules-h">Специални клетки</div>
+    <div class="cell-rule"><div class="cr-ic">🐉</div><div class="cr-txt"><strong>Дракон помощник</strong><span>Придвижи се 5 клетки напред</span></div></div>
+    <div class="cell-rule"><div class="cr-ic">🔥</div><div class="cr-txt"><strong>Огън на дракона</strong><span>Върни се 4–5 клетки назад</span></div></div>
+    <div class="cell-rule"><div class="cr-ic">⏩</div><div class="cr-txt"><strong>Бонус ход</strong><span>2 допълнителни клетки напред</span></div></div>
+    <div class="cell-rule"><div class="cr-ic">🔄</div><div class="cr-txt"><strong>Размяна</strong><span>Разменяш позицията с водача</span></div></div>
+    <div class="cell-rule"><div class="cr-ic">💤</div><div class="cr-txt"><strong>Сън</strong><span>Пропускаш следващия си ход</span></div></div>
+    <div class="cell-rule"><div class="cr-ic">⭐</div><div class="cr-txt"><strong>Звезден портал</strong><span>Скок от 8 клетки напред</span></div></div>
+    <div class="rules-h">Герои и сили</div>
+    <div class="hero-rule" style="--hrc:#f5c542"><div class="hr-em">🐉</div><div class="hr-txt"><strong style="color:#f5c542">Дракон</strong><span>Всички останали се връщат 2 клетки назад</span></div></div>
+    <div class="hero-rule" style="--hrc:#ff6b2b"><div class="hr-em">🦅</div><div class="hr-txt"><strong style="color:#ff6b2b">Феникс</strong><span>Следващото движение назад е отменено</span></div></div>
+    <div class="hero-rule" style="--hrc:#9b59b6"><div class="hr-em">🦄</div><div class="hr-txt"><strong style="color:#9b59b6">Единорог</strong><span>Хвърли зара 2 пъти, вземи по-голямото</span></div></div>
+    <div class="hero-rule" style="--hrc:#27ae60"><div class="hr-em">🦁</div><div class="hr-txt"><strong style="color:#27ae60">Лъв</strong><span>Изпрати избран играч 3 клетки назад</span></div></div>
+    <div class="hero-rule" style="--hrc:#2980b9"><div class="hr-em">🐺</div><div class="hr-txt"><strong style="color:#2980b9">Вълк</strong><span>Размени се с водача</span></div></div>
+    <div class="hero-rule" style="--hrc:#e74c3c"><div class="hr-em">🦊</div><div class="hr-txt"><strong style="color:#e74c3c">Лисица</strong><span>Игнорирай следващата лоша клетка</span></div></div>
+  </div>
+</div>
+
+<!-- RESULTS -->
 <div id="s-results" class="screen">
   <div class="rules-wrap">
     <button class="btn-back" onclick="show('s-home')">← Назад</button>
-    <div class="rules-h" style="margin-top:0">🏆 Резултати</div>
+    <div class="rules-h" id="results-title" style="margin-top:0">🏆 Резултати</div>
+    <button class="btn-switch-res" id="results-switch" onclick="switchResultsGame()">Виж другата игра</button>
     <div id="res-content"></div>
   </div>
 </div>
@@ -286,9 +323,9 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#0a0a0f;color:#f0
   </div>
 </div>
 
-<!-- LION TARGET -->
+<!-- TARGET OVERLAY -->
 <div class="overlay" id="ov">
-  <div class="ov-title">🦁 Избери жертва (-3 клетки)</div>
+  <div class="ov-title" id="ov-title">Избери жертва (-3 клетки)</div>
   <div id="ov-list"></div>
   <button class="ov-cancel" onclick="cancelTarget()">Откажи</button>
 </div>
@@ -301,23 +338,35 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#0a0a0f;color:#f0
 </div>
 
 <script>
-const COLORS=['#ff8c00','#4a90e2','#e74c3c','#aaaaaa'];
 const DICE_ICO=['⚀','⚁','⚂','⚃','⚄','⚅'];
-const HEROES=[
+
+const TIGER_HEROES=[
   {id:'orange_lion',em:'🦁',name:'Оранжев лъв',power:'Изпрати играч 3 клетки назад'},
   {id:'blue_lion',  em:'🦁',name:'Син лъв',    power:'Игнорирай следващата лоша клетка'},
   {id:'red_lion',   em:'🦁',name:'Червен лъв', power:'Хвърли 2 пъти, вземи по-голямото'},
   {id:'black_lion', em:'🦁',name:'Черен лъв',  power:'Всички се връщат 2 клетки назад'},
 ];
-const SP={
-  8: {t:'good',ic:'🦁',col:'#27ae60',d:5},
-  23:{t:'good',ic:'🦁',col:'#27ae60',d:5},
-  37:{t:'good',ic:'🦁',col:'#27ae60',d:5},
-  51:{t:'good',ic:'🦁',col:'#27ae60',d:5},
-  15:{t:'bad', ic:'🐯',col:'#e74c3c',d:-4},
-  30:{t:'bad', ic:'🐯',col:'#e74c3c',d:-4},
-  43:{t:'bad', ic:'🐯',col:'#e74c3c',d:-4},
-  56:{t:'bad', ic:'🐯',col:'#e74c3c',d:-5},
+const TIGER_COLORS=['#ff8c00','#4a90e2','#e74c3c','#9e9e9e'];
+
+const DRAGON_HEROES=[
+  {id:'dragon', em:'🐉',name:'Дракон',  power:'Всички се връщат 2 клетки назад'},
+  {id:'phoenix',em:'🦅',name:'Феникс',  power:'Следващото движение назад е отменено'},
+  {id:'unicorn',em:'🦄',name:'Единорог',power:'Хвърли 2 пъти, вземи по-голямото'},
+  {id:'lion',   em:'🦁',name:'Лъв',     power:'Изпрати играч 3 клетки назад'},
+  {id:'wolf',   em:'🐺',name:'Вълк',    power:'Размени се с водача'},
+  {id:'fox',    em:'🦊',name:'Лисица',  power:'Игнорирай следващата лоша клетка'},
+];
+const DRAGON_COLORS=['#f5c542','#ff6b2b','#9b59b6','#27ae60','#2980b9','#e74c3c'];
+
+const SP_BASE={
+  8: {t:'good',col:'#27ae60',d:5},
+  23:{t:'good',col:'#27ae60',d:5},
+  37:{t:'good',col:'#27ae60',d:5},
+  51:{t:'good',col:'#27ae60',d:5},
+  15:{t:'bad', col:'#e74c3c',d:-4},
+  30:{t:'bad', col:'#e74c3c',d:-4},
+  43:{t:'bad', col:'#e74c3c',d:-4},
+  56:{t:'bad', col:'#e74c3c',d:-5},
   11:{t:'fwd2',ic:'⏩',col:'#00bcd4',d:2},
   26:{t:'fwd2',ic:'⏩',col:'#00bcd4',d:2},
   41:{t:'fwd2',ic:'⏩',col:'#00bcd4',d:2},
@@ -330,48 +379,81 @@ const SP={
   46:{t:'star',ic:'⭐',col:'#ff6b2b',d:8},
 };
 
-const DB_KEY='tigerfight_v1';
-
-function dbSave(winner,heroName,heroCol,numPlayers){
-  const rows=dbLoad();
-  rows.unshift({winner,hero:heroName,col:heroCol,players:numPlayers,date:new Date().toLocaleDateString('bg-BG')});
-  if(rows.length>30) rows.pop();
-  localStorage.setItem(DB_KEY,JSON.stringify(rows));
-}
-function dbLoad(){try{return JSON.parse(localStorage.getItem(DB_KEY)||'[]');}catch{return [];}}
-function dbClear(){localStorage.removeItem(DB_KEY);showResults();}
-
-function showResults(){
-  show('s-results');
-  const rows=dbLoad();
-  const el=document.getElementById('res-content');
-  if(!rows.length){
-    el.innerHTML='<div class="res-empty">Все още няма записани игри.<br>Играй и победи тигъра! 🐯</div>';
-    return;
-  }
-  el.innerHTML=
-    `<div class="res-count">${rows.length} записани игри</div>`+
-    rows.map(r=>
-      `<div class="res-item">
-        <div class="ri-em">🦁</div>
-        <div class="ri-info">
-          <div class="ri-name" style="color:${r.col||'#ff8c00'}">${r.winner}</div>
-          <div class="ri-meta">${r.hero} · ${r.players} играча</div>
-        </div>
-        <div class="ri-date">${r.date}</div>
-      </div>`
-    ).join('')+
-    '<button class="btn-clear" onclick="dbClear()">🗑 Изчисти резултатите</button>';
+function spIcon(sp){
+  if(sp.ic) return sp.ic;
+  if(sp.t==='good') return GAME==='tiger'?'🦁':'🐉';
+  if(sp.t==='bad')  return GAME==='tiger'?'🐯':'🔥';
+  return '';
 }
 
-let G={players:[],cur:0,busy:false,log:[]};
+let GAME='tiger';
+let HEROES=TIGER_HEROES;
+let COLORS=TIGER_COLORS;
+let G={players:[],cur:0,busy:false,log:[],heroes:[]};
 let pCount=0;
 
-// ──── SETUP ────
+function selectGame(g){
+  GAME=g;
+  HEROES=g==='tiger'?TIGER_HEROES:DRAGON_HEROES;
+  COLORS=g==='tiger'?TIGER_COLORS:DRAGON_COLORS;
+  G={players:[],cur:0,busy:false,log:[],heroes:[]};
+  pCount=0;
+  renderHome();
+  renderSetupHeader();
+  show('s-home');
+}
+
+function renderHome(){
+  const t=GAME==='tiger';
+  document.getElementById('home-em').textContent=t?'🦁':'🐉';
+  const titleEl=document.getElementById('home-title');
+  titleEl.textContent=t?'ПОБЕДИ ТИГЪРА':'DRAGON FACE';
+  titleEl.className='gtitle '+(t?'tiger':'dragon');
+  document.getElementById('home-sub').textContent=t
+    ?'Семейна игра с лъвове · 2–4 играча'
+    :'Семейна игра с герои · 2–6 играча';
+  const pb=document.getElementById('home-play-btn');
+  pb.textContent=t?'🦁 Играй':'🐉 Играй';
+  pb.className=t?'btn-home btn-play-tiger':'btn-home btn-play-dragon';
+  document.getElementById('s-home').style.background=t
+    ?'radial-gradient(ellipse at 50% 0%,#3a1500 0%,#0a0a0f 65%)'
+    :'radial-gradient(ellipse at 50% 0%,#1a0030 0%,#0a0a0f 65%)';
+}
+
+function renderSetupHeader(){
+  const t=GAME==='tiger';
+  const maxP=t?4:6;
+  document.getElementById('setup-em').textContent=t?'🦁':'🐉';
+  const st=document.getElementById('setup-title');
+  st.textContent=t?'ПОБЕДИ ТИГЪРА':'DRAGON FACE';
+  st.className='gtitle '+(t?'tiger':'dragon');
+  document.getElementById('setup-sub').textContent=t?'Кои лъвове играят?':'Настрой играта';
+  const bg=document.getElementById('btn-go');
+  bg.textContent=t?'🐯 Към битката!':'🐉 Започни играта!';
+  bg.className='btn-start '+(t?'tiger':'dragon');
+  bg.style.display='none';
+  const row=document.getElementById('cnt-row'); row.innerHTML='';
+  for(let i=2;i<=maxP;i++){
+    const btn=document.createElement('button');
+    btn.className='cnt'; btn.textContent=i;
+    btn.onclick=(n=>()=>setN(n))(i);
+    row.appendChild(btn);
+  }
+  document.getElementById('hero-area').innerHTML='';
+  document.getElementById('s-setup').style.background=t
+    ?'radial-gradient(ellipse at 50% 0%,#3a1500 0%,#0a0a0f 65%)'
+    :'radial-gradient(ellipse at 50% 0%,#1a0030 0%,#0a0a0f 65%)';
+}
+
 function setN(n){
   pCount=n;
-  document.querySelectorAll('.cnt').forEach((b,i)=>b.classList.toggle('on',i===n-2));
-  renderLionPreview(n);
+  document.querySelectorAll('.cnt').forEach(b=>b.classList.toggle('on',parseInt(b.textContent)===n));
+  if(GAME==='tiger'){
+    renderLionPreview(n);
+  } else {
+    G.heroes=new Array(n).fill(0);
+    renderHeroSelect(n);
+  }
   document.getElementById('btn-go').style.display='block';
 }
 
@@ -379,23 +461,60 @@ function renderLionPreview(n){
   const a=document.getElementById('hero-area'); a.innerHTML='';
   const wrap=document.createElement('div');
   wrap.style.cssText='width:100%;max-width:440px;margin-bottom:16px';
-  wrap.innerHTML=`<div class="slabel" style="margin-bottom:10px">Лъвове в битката</div><div class="lion-preview" style="grid-template-columns:repeat(${Math.min(n,2)},1fr)">${HEROES.slice(0,n).map((h,i)=>`<div class="lion-card" style="--lc:${COLORS[i]}"><span class="lc-em">🦁</span><div class="lc-nm">${h.name}</div><div class="lc-pw">${h.power}</div></div>`).join('')}</div>`;
+  wrap.innerHTML=`<div class="slabel" style="margin-bottom:10px">Лъвове в битката</div>
+    <div class="lion-preview" style="grid-template-columns:repeat(${n},1fr)">
+    ${TIGER_HEROES.slice(0,n).map((h,i)=>
+      `<div class="lion-card" style="--lc:${TIGER_COLORS[i]}">
+        <span class="lc-em">🦁</span>
+        <div class="lc-nm">${h.name}</div>
+        <div class="lc-pw">${h.power}</div>
+      </div>`
+    ).join('')}</div>`;
   a.appendChild(wrap);
 }
 
-function startGame(){
-  G.players=Array.from({length:pCount},(_,i)=>({
-    name:`Играч ${i+1}`,hero:HEROES[i],
-    color:COLORS[i],pos:0,pUsed:false,skip:false,shield:false,pShield:false
-  }));
-  G.cur=0; G.busy=false; G.log=[];
-  show('s-game');
-  buildBoard();
-  renderSidebar();
-  log('🦁 Битката започна!');
+function renderHeroSelect(n){
+  const a=document.getElementById('hero-area'); a.innerHTML='';
+  for(let p=0;p<n;p++){
+    const row=document.createElement('div'); row.className='p-row';
+    row.innerHTML=`<div class="p-label" style="color:${DRAGON_COLORS[p]}">Играч ${p+1} — избери герой</div>
+      <div class="hero-grid">${DRAGON_HEROES.map((h,i)=>
+        `<div class="hero-opt${i===0?' on':''}" style="--hc:${DRAGON_COLORS[p]}"
+          onclick="pickHero(${p},${i})" id="ho-${p}-${i}">
+          <span class="ho-em">${h.em}</span>
+          <div class="ho-nm">${h.name}</div>
+          <div class="ho-pw">${h.power}</div>
+        </div>`
+      ).join('')}</div>`;
+    a.appendChild(row);
+  }
 }
 
-// ──── BOARD ────
+function pickHero(p,i){
+  G.heroes[p]=i;
+  for(let j=0;j<DRAGON_HEROES.length;j++){
+    const el=document.getElementById(`ho-${p}-${j}`);
+    if(el) el.classList.toggle('on',j===i);
+  }
+}
+
+function startGame(){
+  if(GAME==='tiger'){
+    G.players=Array.from({length:pCount},(_,i)=>({
+      name:`Играч ${i+1}`,hero:TIGER_HEROES[i],
+      color:TIGER_COLORS[i],pos:0,pUsed:false,skip:false,shield:false,pShield:false
+    }));
+  } else {
+    G.players=Array.from({length:pCount},(_,i)=>({
+      name:`Играч ${i+1}`,hero:DRAGON_HEROES[G.heroes[i]||0],
+      color:DRAGON_COLORS[i],pos:0,pUsed:false,skip:false,shield:false,pShield:false
+    }));
+  }
+  G.cur=0; G.busy=false; G.log=[];
+  show('s-game'); buildBoard(); renderSidebar();
+  log(GAME==='tiger'?'🦁 Битката започна!':'🐉 Играта започна!');
+}
+
 function cellNum(r,c){
   const rfb=5-r,base=rfb*10;
   return rfb%2===0?base+c+1:base+10-c;
@@ -403,13 +522,14 @@ function cellNum(r,c){
 
 function buildBoard(){
   const bd=document.getElementById('board'); bd.innerHTML='';
+  const finIc=GAME==='tiger'?'🐯':'🐉';
   for(let r=0;r<6;r++) for(let c=0;c<10;c++){
-    const n=cellNum(r,c),sp=SP[n],fin=n===60;
+    const n=cellNum(r,c),sp=SP_BASE[n],fin=n===60;
     const el=document.createElement('div');
     el.className='cell'+(sp?' sp':'')+(fin?' fin':'');
     if(sp) el.style.setProperty('--sc',sp.col);
     el.id='c'+n;
-    el.innerHTML=`<span class="cell-n">${n}</span><span class="cell-ic">${fin?'🐯':sp?sp.ic:''}</span><div class="cell-tok" id="t${n}"></div>`;
+    el.innerHTML=`<span class="cell-n">${n}</span><span class="cell-ic">${fin?finIc:sp?spIcon(sp):''}</span><div class="cell-tok" id="t${n}"></div>`;
     bd.appendChild(el);
   }
   renderTokens();
@@ -427,7 +547,6 @@ function renderTokens(){
   });
 }
 
-// ──── SIDEBAR ────
 function renderSidebar(){
   const p=G.players[G.cur];
   const cb=document.getElementById('cur-box');
@@ -438,13 +557,19 @@ function renderSidebar(){
   rb.textContent=p.skip?'💤 Пропускаш хода':'🎲 Хвърли зара!';
   const pb=document.getElementById('pwr-btn');
   pb.disabled=p.pUsed||G.busy;
-  pb.textContent=`🦁 ${p.hero.name}: Специална сила`;
+  pb.textContent=`${p.hero.em} ${p.hero.name}: Специална сила`;
   document.getElementById('pwr-info').textContent=p.pUsed?'Вече използвана':p.hero.power;
-  const pl=document.getElementById('plist');
-  pl.innerHTML=G.players.map((q,i)=>`<div class="pitem ${i===G.cur?'cur':''}" style="--pc:${q.color}"><div class="pdot" style="background:${q.color}">🦁</div><div class="pinfo"><div class="pname" style="color:${q.color}">${q.name}</div><div class="ppos">Клетка ${q.pos||'Старт'}${q.skip?' 💤':''}</div></div></div>`).join('');
+  document.getElementById('plist').innerHTML=G.players.map((q,i)=>
+    `<div class="pitem ${i===G.cur?'cur':''}" style="--pc:${q.color}">
+      <div class="pdot" style="background:${q.color}">${q.hero.em}</div>
+      <div class="pinfo">
+        <div class="pname" style="color:${q.color}">${q.name}</div>
+        <div class="ppos">Клетка ${q.pos||'Старт'}${q.skip?' 💤':''}</div>
+      </div>
+    </div>`
+  ).join('');
 }
 
-// ──── DICE ────
 async function rollDice(){
   if(G.busy) return;
   const p=G.players[G.cur];
@@ -479,14 +604,13 @@ async function animDice2(){
 
 function rnd6(){ return Math.ceil(Math.random()*6); }
 
-// ──── MOVE ────
 async function move(pi,steps){
   const p=G.players[pi];
   const back=steps<0;
   if(back && p.pShield){
     p.pShield=false;
-    toast('🦁','Синият лъв те защити!','Не се връщаш назад!'); await sl(1700);
-    log(`🦁 ${p.name}: щитът блокира движението назад!`);
+    toast(p.hero.em,'Щит!','Не се връщаш назад!'); await sl(1700);
+    log(`${p.hero.em} ${p.name}: щитът блокира движението назад!`);
     nextTurn(); return;
   }
   const abs=Math.abs(steps);
@@ -500,25 +624,26 @@ async function move(pi,steps){
 }
 
 async function applyCell(pi){
-  const p=G.players[pi],sp=SP[p.pos];
+  const p=G.players[pi],sp=SP_BASE[p.pos];
   if(!sp){ nextTurn(); return; }
+  const ic=spIcon(sp);
   if(p.shield && (sp.t==='bad'||sp.t==='sleep')){
     p.shield=false;
-    toast('🦁','Лисицата те защити!','Лошата клетка е пропусната!'); await sl(1700);
-    log(`🦁 ${p.name} избегна ${sp.ic}`);
+    toast(p.hero.em,'Щит!','Лошата клетка е пропусната!'); await sl(1700);
+    log(`${p.hero.em} ${p.name} избегна клетката`);
     nextTurn(); return;
   }
   if(sp.t==='good'){
-    toast('🦁','Приятел лъв!',`+${sp.d} клетки напред!`); await sl(1700);
-    log(`🦁 ${p.name}: приятел лъв! +${sp.d}`); await move(pi,sp.d); return;
+    toast(ic,GAME==='tiger'?'Приятел лъв!':'Дракон помощник!',`+${sp.d} клетки напред!`); await sl(1700);
+    log(`${ic} ${p.name}: +${sp.d}`); await move(pi,sp.d); return;
   }
   if(sp.t==='bad'){
-    toast('🐯','Тигърска засада!',`${sp.d} клетки назад!`); await sl(1700);
-    log(`🐯 ${p.name}: тигърска засада! ${sp.d}`); await move(pi,sp.d); return;
+    toast(ic,GAME==='tiger'?'Тигърска засада!':'Огън на дракона!',`${sp.d} клетки назад!`); await sl(1700);
+    log(`${ic} ${p.name}: ${sp.d}`); await move(pi,sp.d); return;
   }
   if(sp.t==='fwd2'){
     toast('⏩','Бонус ход!','+2 клетки!'); await sl(1700);
-    log(`⏩ ${p.name}: +2 клетки напред!`); await move(pi,2); return;
+    log(`⏩ ${p.name}: +2!`); await move(pi,2); return;
   }
   if(sp.t==='swap'){
     const li=leader(pi);
@@ -535,7 +660,7 @@ async function applyCell(pi){
   }
   if(sp.t==='star'){
     toast('⭐','Звезден портал!',`+${sp.d} напред!`); await sl(1700);
-    log(`⭐ ${p.name}: звезден портал +${sp.d}`); await move(pi,sp.d); return;
+    log(`⭐ ${p.name}: +${sp.d}`); await move(pi,sp.d); return;
   }
   nextTurn();
 }
@@ -546,32 +671,53 @@ function leader(excl){
   return best;
 }
 
-// ──── POWERS ────
 async function usePower(){
   const p=G.players[G.cur]; if(p.pUsed||G.busy) return;
-  switch(p.hero.id){
-    case 'orange_lion':{
-      const others=G.players.filter((_,i)=>i!==G.cur&&G.players[i].pos>0);
-      if(!others.length){ toast('🦁','Няма цели!','Другите са на старт.'); await sl(1500); return; }
-      p.pUsed=true; renderSidebar(); showTargets(); return;
-    }
-    case 'blue_lion':
-      p.pUsed=true; p.shield=true;
-      toast('🦁','Щит!','Следващата лоша клетка е игнорирана!'); await sl(1700);
-      log(`🦁 ${p.name}: Щит активен!`); renderSidebar(); break;
-    case 'red_lion':{
-      p.pUsed=true; G.busy=true; renderSidebar();
-      const r1=await animDice(), r2=await animDice2();
-      const best=Math.max(r1,r2);
-      toast('🦁','Двоен зар!',`Хвърли ${r1} и ${r2} → взе ${best}!`); await sl(1700);
-      log(`🦁 ${p.name}: ${r1} и ${r2} → ${best}`); await move(G.cur,best);
-      G.busy=false; return;
-    }
-    case 'black_lion':
-      p.pUsed=true;
-      G.players.forEach((q,i)=>{ if(i!==G.cur&&q.pos>0) q.pos=Math.max(1,q.pos-2); });
-      renderTokens(); toast('🦁','Рев на черния лъв!','Всички се върнаха 2 клетки!'); await sl(1700);
-      log(`🦁 ${p.name}: Рев! Всички назад 2!`); renderSidebar(); break;
+  const id=p.hero.id;
+
+  if(id==='orange_lion'||id==='lion'){
+    const others=G.players.filter((_,i)=>i!==G.cur&&G.players[i].pos>0);
+    if(!others.length){ toast(p.hero.em,'Няма цели!','Другите са на старт.'); await sl(1500); return; }
+    p.pUsed=true; renderSidebar();
+    document.getElementById('ov-title').textContent=`${p.hero.em} Избери жертва (-3 клетки)`;
+    showTargets(); return;
+  }
+
+  if(id==='blue_lion'||id==='fox'){
+    p.pUsed=true; p.shield=true;
+    toast(p.hero.em,'Щит!','Следващата лоша клетка е игнорирана!'); await sl(1700);
+    log(`${p.hero.em} ${p.name}: Щит активен!`); renderSidebar(); return;
+  }
+
+  if(id==='red_lion'||id==='unicorn'){
+    p.pUsed=true; G.busy=true; renderSidebar();
+    const r1=await animDice(), r2=await animDice2();
+    const best=Math.max(r1,r2);
+    toast(p.hero.em,'Двоен зар!',`${r1} и ${r2} → взе ${best}!`); await sl(1700);
+    log(`${p.hero.em} ${p.name}: ${r1} и ${r2} → ${best}`); await move(G.cur,best);
+    G.busy=false; return;
+  }
+
+  if(id==='black_lion'||id==='dragon'){
+    p.pUsed=true;
+    G.players.forEach((q,i)=>{ if(i!==G.cur&&q.pos>0) q.pos=Math.max(1,q.pos-2); });
+    renderTokens(); toast(p.hero.em,'Рев!','Всички се върнаха 2 клетки!'); await sl(1700);
+    log(`${p.hero.em} ${p.name}: Рев! Всички назад 2!`); renderSidebar(); return;
+  }
+
+  if(id==='phoenix'){
+    p.pUsed=true; p.pShield=true;
+    toast('🦅','Феникс!','Следващото движение назад е отменено!'); await sl(1700);
+    log(`🦅 ${p.name}: Феникс щит активен!`); renderSidebar(); return;
+  }
+
+  if(id==='wolf'){
+    const li=leader(G.cur);
+    if(li===-1){ toast('🐺','Вълк!','Вече водиш!'); await sl(1500); return; }
+    p.pUsed=true;
+    const lp=G.players[li],tmp=p.pos; p.pos=lp.pos; lp.pos=tmp;
+    renderTokens(); toast('🐺','Вълк!',`${p.name} ↔ ${lp.name}`); await sl(1700);
+    log(`🐺 ${p.name} се размени с ${lp.name}!`); renderSidebar(); return;
   }
 }
 
@@ -581,18 +727,18 @@ function showTargets(){
   G.players.forEach((q,i)=>{
     if(i===G.cur||q.pos<1) return;
     const d=document.createElement('div'); d.className='tgt';
-    d.innerHTML=`<div style="font-size:26px;color:${q.color}">🦁</div><div><div style="font-weight:700;color:${q.color}">${q.name} · ${q.hero.name}</div><div style="font-size:11px;color:#a89070">Клетка ${q.pos}</div></div>`;
-    d.onclick=()=>applyOrangePower(i); ol.appendChild(d);
+    d.innerHTML=`<div style="font-size:26px;color:${q.color}">${q.hero.em}</div><div><div style="font-weight:700;color:${q.color}">${q.name} · ${q.hero.name}</div><div style="font-size:11px;color:#a89070">Клетка ${q.pos}</div></div>`;
+    d.onclick=()=>applyTargetPower(i); ol.appendChild(d);
   });
   ov.classList.add('on');
 }
 
-async function applyOrangePower(ti){
+async function applyTargetPower(ti){
   document.getElementById('ov').classList.remove('on');
   const p=G.players[G.cur],t=G.players[ti];
   t.pos=Math.max(1,t.pos-3); renderTokens();
-  toast('🦁','Рев!',`${t.name} отиде 3 назад!`); await sl(1700);
-  log(`🦁 ${p.name} изпрати ${t.name} 3 назад!`); renderSidebar();
+  toast(p.hero.em,'Рев!',`${t.name} отиде 3 назад!`); await sl(1700);
+  log(`${p.hero.em} ${p.name} изпрати ${t.name} 3 назад!`); renderSidebar();
 }
 
 function cancelTarget(){
@@ -600,7 +746,6 @@ function cancelTarget(){
   G.players[G.cur].pUsed=false; renderSidebar();
 }
 
-// ──── TURNS ────
 function nextTurn(){
   G.cur=(G.cur+1)%G.players.length;
   G.busy=false; renderSidebar(); renderLog();
@@ -609,20 +754,26 @@ function nextTurn(){
 function log(m){ G.log.unshift(m); if(G.log.length>25) G.log.pop(); renderLog(); }
 function renderLog(){ document.getElementById('log-box').innerHTML=G.log.slice(0,10).map(m=>`<div>${m}</div>`).join(''); }
 
-// ──── WIN ────
 function showWin(pi){
   const p=G.players[pi];
-  dbSave(p.name,p.hero.name,p.color,G.players.length);
+  const dbKey=GAME==='tiger'?'tigerfight_v1':'dragonface_v1';
+  dbSave(p.name,p.hero.name,p.hero.em,p.color,G.players.length,dbKey);
   show('s-win');
-  document.getElementById('w-em').textContent='🦁';
-  document.getElementById('w-title').textContent=`${p.name} победи тигъра!`;
-  document.getElementById('w-sub').textContent=`${p.hero.name} стигна до тигъра и спечели! 🐯`;
+  if(GAME==='tiger'){
+    document.getElementById('w-em').textContent='🦁';
+    document.getElementById('w-title').textContent=`${p.name} победи тигъра!`;
+    document.getElementById('w-sub').textContent=`${p.hero.name} стигна до тигъра и спечели! 🐯`;
+  } else {
+    document.getElementById('w-em').textContent=p.hero.em;
+    document.getElementById('w-title').textContent=`${p.name} спечели!`;
+    document.getElementById('w-sub').textContent=`${p.hero.name} достигна Гнездото на Дракона! 🏰`;
+  }
   confetti();
 }
 
 function confetti(){
   const w=document.getElementById('cw'); w.innerHTML='';
-  const cols=['#f5c542','#ff8c00','#e74c3c','#4a90e2','#27ae60','#aaaaaa'];
+  const cols=['#f5c542','#ff8c00','#e74c3c','#4a90e2','#27ae60','#9b59b6'];
   for(let i=0;i<90;i++){
     const c=document.createElement('div'); c.className='conf';
     const sz=5+Math.random()*7;
@@ -632,26 +783,68 @@ function confetti(){
 }
 
 function resetGame(){
-  G={players:[],cur:0,busy:false,log:[]};
+  G={players:[],cur:0,busy:false,log:[],heroes:[]};
   pCount=0;
-  document.querySelectorAll('.cnt').forEach(b=>b.classList.remove('on'));
-  document.getElementById('hero-area').innerHTML='';
-  document.getElementById('btn-go').style.display='none';
   document.getElementById('dice').textContent='🎲';
+  renderSetupHeader();
   show('s-setup');
 }
 
 function goHome(){
-  G={players:[],cur:0,busy:false,log:[]};
+  G={players:[],cur:0,busy:false,log:[],heroes:[]};
   pCount=0;
-  document.querySelectorAll('.cnt').forEach(b=>b.classList.remove('on'));
-  document.getElementById('hero-area').innerHTML='';
-  document.getElementById('btn-go').style.display='none';
   document.getElementById('dice').textContent='🎲';
+  renderSetupHeader();
   show('s-home');
 }
 
-// ──── TOAST ────
+function showRules(){
+  show(GAME==='tiger'?'s-rules-tiger':'s-rules-dragon');
+}
+
+function dbSave(winner,heroName,heroEm,heroCol,numPlayers,key){
+  const rows=dbLoad(key);
+  rows.unshift({winner,hero:heroName,em:heroEm,col:heroCol,players:numPlayers,date:new Date().toLocaleDateString('bg-BG')});
+  if(rows.length>30) rows.pop();
+  localStorage.setItem(key,JSON.stringify(rows));
+}
+function dbLoad(key){try{return JSON.parse(localStorage.getItem(key)||'[]');}catch{return [];}}
+function dbClear(key){localStorage.removeItem(key);renderResultsForGame(resultsGame);}
+
+let resultsGame=null;
+function showResults(){
+  show('s-results');
+  renderResultsForGame(GAME);
+}
+function switchResultsGame(){
+  renderResultsForGame(resultsGame==='tiger'?'dragon':'tiger');
+}
+function renderResultsForGame(g){
+  resultsGame=g;
+  const key=g==='tiger'?'tigerfight_v1':'dragonface_v1';
+  document.getElementById('results-title').textContent=
+    g==='tiger'?'🏆 Победи тигъра — Резултати':'🏆 Dragon Face — Резултати';
+  document.getElementById('results-switch').textContent=
+    g==='tiger'?'Виж Dragon Face 🐉':'Виж Победи тигъра 🦁';
+  const rows=dbLoad(key);
+  const el=document.getElementById('res-content');
+  if(!rows.length){
+    el.innerHTML=`<div class="res-empty">Все още няма записани игри.</div>`;
+    return;
+  }
+  el.innerHTML=
+    `<div class="res-count">${rows.length} записани игри</div>`+
+    rows.map(r=>`<div class="res-item">
+      <div class="ri-em">${r.em||'🦁'}</div>
+      <div class="ri-info">
+        <div class="ri-name" style="color:${r.col||'#ff8c00'}">${r.winner}</div>
+        <div class="ri-meta">${r.hero} · ${r.players} играча</div>
+      </div>
+      <div class="ri-date">${r.date}</div>
+    </div>`).join('')+
+    `<button class="btn-clear" onclick="dbClear('${key}')">🗑 Изчисти резултатите</button>`;
+}
+
 let tTimer;
 function toast(ic,msg,sub){
   document.getElementById('t-ic').textContent=ic;
